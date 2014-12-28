@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <monster>
+    <name>Great Orc</name>
+    <desc>a large, ugly humanoid wielding a cudgel and sword</desc>
+    <hpMin>15</hpMin>
+    <hpMax>28</hpMax>
+    <armorClass>4</armorClass>
+    <toHit>4</toHit>
+    <isDead>false</isDead>
+    <attacks numAttacks ="3">
+      <attackType>BITE</attackType>
+      <attackDesc>The orc attempts to bite you with his nasty, sharp teeth.</attackDesc>
+      <attackDamage>5</attackDamage>
+      <attackDmgModifier>0</attackDmgModifier>
+      <attackType>SLASH</attackType>
+      <attackDesc>The orc attacks you with his curved great sword.</attackDesc>
+      <attackDamage>10</attackDamage>
+      <attackDmgModifier>0</attackDmgModifier>
+      <attackType>BLUDGEON</attackType>
+      <attackDesc>The orc tries to bash your head in with his cudgel</attackDesc>
+      <attackDamage>12</attackDamage>
+      <attackDmgModifier>2</attackDmgModifier>
+    </attacks>
+  </monster>
+  <monster>
+    <name>Giant Rat</name>
+    <desc>a dog-sized rodent with long, pointy teeth and razor-sharp claws</desc>
+    <hpMin>5</hpMin>
+    <hpMax>15</hpMax>
+    <armorClass>0</armorClass>
+    <toHit>1</toHit>
+    <isDead>false</isDead>
+    <attacks numAttacks="2">
+      <attackType>BITE</attackType>
+      <attackDesc>The rat attempts to bite you with his nasty, pointy teeth.</attackDesc>
+      <attackDamage>3</attackDamage>
+      <attackDmgModifier>0</attackDmgModifier>
+      <attackType>SLASH</attackType>
+      <attackDesc>The rat slashes at you with his claws</attackDesc>
+      <attackDamage>5</attackDamage>
+      <attackDmgModifier>0</attackDmgModifier>
+    </attacks>
+  </monster>
+  <monster>
+    <name>Goblin</name>
+    <desc>a short, hideous, green goblin with leather armor, holding a crooked dagger.</desc>
+    <hpMin>8</hpMin>
+    <hpMax>18</hpMax>
+    <armorClass>1</armorClass>
+    <toHit>1</toHit>
+    <isDead>false</isDead>
+    <attacks numAttacks="3">
+      <attackType>BITE</attackType>
+      <attackDesc>The goblin tries to bite you.</attackDesc>
+      <attackDamage>3</attackDamage>
+      <attackDmgModifier>0</attackDmgModifier>
+      <attackType>SLASH</attackType>
+      <attackDesc>The goblin slashes at you with his dagger.</attackDesc>
+      <attackDamage>5</attackDamage>
+      <attackDmgModifier>0</attackDmgModifier>
+      <attackType>STAB</attackType>
+      <attackDesc>The goblin stabs you with the pointy end of his dagger.</attackDesc>
+      <attackDamage>5</attackDamage>
+      <attackDmgModifier>3</attackDmgModifier>
+    </attacks>
+  </monster>
+</root>

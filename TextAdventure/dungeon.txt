@@ -1,0 +1,12 @@
+1001:none:You awaken into a dimly lit room, unaware of what has happened to you. Your clothes are dirty rags, you seem to have no possesions or armor. The room is fairly large, and smells damp and musty. Piles of refuse litter the room, and there is no furniture save a large, beaten table in the center of the room. The only exit seems to be a large iron gate to the north.
+1002:look,search,examine,piles,trash,refuse,litter:After some searching, you find a loaf of stale bread, and a small dagger in a scabbard.
+1002:bread,dagger:items
+1003:look,search,examine,table:On the table is a pewter candalabra, devoid of candles. The table has mysterious words burned into it.
+1004:pick,up,move,push,table:The table is too heavy to move.
+1005:grab,pick,up,take,candalabra:It appears to be attached to the table, but can be moved slightly in one direction.
+1006:push,pull,move,candalabra:You hear a clanging, grinding noise from far off, and the iron gate slowly begins to move upwards until it is mostly open, billowing clouds of rusty dust.
+1007:look,examine,read,words:Wiping away layers of dust and grime, you see, burned into the wood of the table, "ABKRA BAKA SHAKULA"
+1008:open,door,gate:The iron bars of the gate are rusty, old, and they do not budge.
+1008:open,door,gate:The gate is already open.
+1009:jump,up,on,table:You jump up onto the table. Woohoo!
+1010:climb,walls:The walls are unclimbable.
