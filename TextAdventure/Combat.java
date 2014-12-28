@@ -203,7 +203,7 @@ public class Combat
 	{
 
 		m = mList.get(Player.getRandomInt(0, mList.size()-1));
-		System.out.println("ID: " + m.id);
+		m.setIsDead(false);
 		m.calcHP();
 		pHP = 100;
 
@@ -276,7 +276,7 @@ public class Combat
 						{
 							System.out.println("You were killed DEAD!!");
 							inline = "quit";
-							m = null;
+							//m = null;
 							break;
 						}
 					}
