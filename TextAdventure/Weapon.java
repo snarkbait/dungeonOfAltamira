@@ -63,9 +63,6 @@ public class Weapon extends InvItem
 	public int getAttackIndex(String inp)
 	{
 		int retval = -1;
-//		AttackType t = AttackType.valueOf(inp);
-//		if (t != null)
-//		{
 			for (int i = 0; i < attackType.length; i++)
 			{
 				if (inp.equals(attackType[i].toString()))
@@ -73,7 +70,6 @@ public class Weapon extends InvItem
 					retval = i;
 				}
 			}
-//		}
 		return retval;
 	}
 

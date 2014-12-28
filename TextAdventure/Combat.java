@@ -1,3 +1,13 @@
+// class combat
+// temporarily has a main class for testing, will be incorporated into the main gui
+//
+// TODO: compartmentalize the combat with playerTurn and monsterTurn methods
+// TODO: allow player to always have punch/kick attacktypes
+// TODO: use actual Player instance for the combat
+// TODO: cleanup the read xml file code (move to other class???)
+// TODO: allow multiple-turn lasting damage hits i.e. poison
+// TODO: implement magic system
+
 import java.util.ArrayList;
 import javax.xml.stream.XMLStreamException;
 // class combat
@@ -22,10 +32,7 @@ public class Combat
 			for (int col = 0; col < 10; col++)
 			{
 				combatMatrix[row][col] = ((row * 5) + 50) - (col * 5);
-				//System.out.print(combatMatrix[row][col]);
-				//System.out.print(" ");
 			}
-			System.out.print("\n");
 		}
 	}
 
@@ -82,6 +89,7 @@ public class Combat
 					if (tagStart.equals("monster"))
 					{
 						m = new Monster();
+						m.id = Integer.parseInt(r.getAttrValue());
 					}
 					if (tagStart.equals("root"))
 					{
@@ -159,8 +167,8 @@ public class Combat
 	{
 
 		Parser par = new Parser();
-		Weapon w = new Weapon("dagger","Basic dagger",true,5,2);
-		w.addAttack(0,Weapon.AttackType.SLASH, 0, 0);
+		Weapon w = new Weapon("sword","long sword",true,10,2);
+		w.addAttack(0,Weapon.AttackType.SLASH, 1, 0);
 		w.addAttack(1,Weapon.AttackType.STAB, 1, 5);
 
 
@@ -174,94 +182,115 @@ public class Combat
 		{
 			System.out.println("some kinda error");
 		}
-
-		Monster m = mList.get(2);//Player.getRandomInt(0, mList.size()-1));
-		m.calcHP();
-		System.out.println("Attacks:" + m.getNumAttacks());
-		System.out.println("monster HP:" + m.getHP());
 		createCombatMatrix();
 
 		//player
 		int damage = w.getDamage();
 		//int dModifier = w.getDmgMod();
-		int pToHit = 1;
+		int pToHit = 3;
 		//int pAMod = 5;
-		int pHP = 10;
-		int pAC = 0;
-
-
+		int pAC = 3;
+		int pHP = 100;
+		Monster m;
 		boolean attack;
 		int roll;
 		boolean critical;
+		boolean auto = false;
 		int mAttack = -1;
 		int currentDmg;
-		String inline;
+		String inline = "";
+	while (!inline.equalsIgnoreCase("quit"))
+	{
+
+		m = mList.get(Player.getRandomInt(0, mList.size()-1));
+		System.out.println("ID: " + m.id);
+		m.calcHP();
+		pHP = 100;
 
 		System.out.println("You encounter a " + m.getName() + ", " + m.getDesc());
 
 
 		while (!m.isDead)
 		{
-			// player turn
-			mAttack = -1;
-			while (mAttack < 0)
-			{
-				inline = par.getInputLine(true, ">").toUpperCase();
-				mAttack = w.getAttackIndex(inline);
-			}
-			System.out.println(">>You " + w.getTypeDesc(mAttack) + " the " + m.getName() + " with your " + w.getName());
-			critical = false;
-			roll = getAttackRoll();
-			if (roll <=5)
-			{
-				System.out.println(">>CRITICAL HIT!!!!!!");
-				critical= true;
-			}
-			attack = isAttackSuccess(roll,pToHit, m.getAC(), w.getHitMod(mAttack));
-			if (attack)
-			{
-				if (!critical) {System.out.println(">>A HIT!!");}
-				currentDmg = getDamage(damage,w.getDmgMod(mAttack),critical);
-				System.out.println(">>Player hits the " + m.getName() + " for " + currentDmg + " points!");
-				m.addHP( -currentDmg );
-			}
-			else
-			{
-				System.out.println(">>You missed.");
-			}
-			if (!m.isDead)
-			{
-				// monster turn
-				critical = false;
-				roll = getAttackRoll();
-				mAttack = Player.getRandomInt(0,m.getNumAttacks()-1);
-				System.out.println("\t" + m.getAttackDesc(mAttack));
-				if (roll <=5)
+				// player turn
+				mAttack = -1;
+				if (!auto)
 				{
-					System.out.println("\tCRITICAL HIT!!!!!!");
-					critical= true;
-				}
-				attack = isAttackSuccess(roll,m.getToHit(), pAC, 0);
-				if (attack)
-				{
-					if (!critical) {System.out.println("\tA HIT!!");}
-					currentDmg = getDamage(m.getAttackDmg(mAttack),m.getAttackDmgMod(mAttack),critical);
-					System.out.println("\tThe " + m.getName() + " hits you for " + currentDmg + " points!");
-					pHP -= currentDmg;
-					if (pHP <=0)
+					while (mAttack < 0)
 					{
-						System.out.println("You were killed DEAD!!");
-						break;
+						inline = par.getInputLine(true, ">").toUpperCase();
+						mAttack = w.getAttackIndex(inline);
+						if (inline.equalsIgnoreCase("quit")) { break;}
+						if (inline.equalsIgnoreCase("auto"))
+						{
+							auto = true;
+							mAttack = Player.getRandomInt(0,1);
+						}
 					}
 				}
 				else
 				{
-					System.out.println("\tThe monster missed.");
+					mAttack = Player.getRandomInt(0,1);
+				}
+				if (inline.equalsIgnoreCase("quit")) { break; }
+				System.out.println(">>You " + w.getTypeDesc(mAttack) + " the " + m.getName() + " with your " + w.getName());
+				critical = false;
+				roll = getAttackRoll();
+				if (roll <=5)
+				{
+					System.out.println(">>CRITICAL HIT!!!!!!");
+					critical= true;
+				}
+				attack = isAttackSuccess(roll,pToHit, m.getAC(), w.getHitMod(mAttack));
+				if (attack)
+				{
+					if (!critical) {System.out.println(">>A HIT!!");}
+					currentDmg = getDamage(damage,w.getDmgMod(mAttack),critical);
+					System.out.println(">>Player hits the " + m.getName() + " for " + currentDmg + " points!");
+					m.addHP( -currentDmg );
+				}
+				else
+				{
+					System.out.println(">>You missed.");
+				}
+				if (!m.isDead)
+				{
+					// monster turn
+					critical = false;
+					roll = getAttackRoll();
+					mAttack = Player.getRandomInt(0,m.getNumAttacks()-1);
+					System.out.println("\t" + m.getAttackDesc(mAttack));
+					if (roll <=5)
+					{
+						System.out.println("\tCRITICAL HIT!!!!!!");
+						critical= true;
+					}
+					attack = isAttackSuccess(roll,m.getToHit(), pAC, 0);
+					if (attack)
+					{
+						if (!critical) {System.out.println("\tA HIT!!");}
+						currentDmg = getDamage(m.getAttackDmg(mAttack),m.getAttackDmgMod(mAttack),critical);
+						System.out.println("\tThe " + m.getName() + " hits you for " + currentDmg + " points!");
+						pHP -= currentDmg;
+						if (pHP <=0)
+						{
+							System.out.println("You were killed DEAD!!");
+							inline = "quit";
+							m = null;
+							break;
+						}
+					}
+					else
+					{
+						System.out.println("\tThe monster missed.");
+					}
 				}
 			}
-
-
+				if (auto) { auto = false;}
+				m = null;
 		}
+
+
 
 /*		for (int i = 0; i < 25; i++)
 		{

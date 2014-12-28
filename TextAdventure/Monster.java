@@ -2,6 +2,7 @@
 
 public class Monster
 {
+	public int id;
 	private String name;
 	private String desc;
 	private int hitPoints;
@@ -19,6 +20,7 @@ public class Monster
 
 	public Monster()
 	{
+		id = 0;
 		name = "";
 		desc = "";
 		hitPoints = 0;
@@ -62,6 +64,7 @@ public class Monster
 			attackDmgModifier = new int[numAttacks];
 		}
 	}
+
 
 	public void setName(String name)
 	{
@@ -120,6 +123,7 @@ public class Monster
 		{
 			isDead = true;
 			System.out.println("The " + name + " is dead!");
+			System.out.println("\n" + "----------------------------\n\n");
 		}
 	}
 
