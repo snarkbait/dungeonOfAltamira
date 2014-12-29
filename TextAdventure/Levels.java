@@ -14,6 +14,7 @@ public class Levels
 	private int levelNum;
 	private static int currentRoomIndex;
 	private ArrayList<Room> room;
+	private ArrayList<Inventory> inv;
 	//private ArrayList<String> listKeyword;
 
 	public Levels()
@@ -24,9 +25,19 @@ public class Levels
 		//listKeyword = new ArrayList<String>();
 	}
 
+	public ArrayList<Room> getRoomList()
+	{
+		return room;
+	}
+
 	public static void setRoomIndex(int index)
 	{
 		currentRoomIndex = index;
+	}
+
+	public int getLevelNum()
+	{
+		return levelNum;
 	}
 
 	public static int getRoomIndex()
@@ -61,7 +72,7 @@ public class Levels
 						{
 							fIndex = roomIDX;
 							hasBoth = true;
-							p.checkGettableItems(room);
+							//p.checkGettableItems(room);
 							//System.out.println("next word found : " + currentWord);
 						}
 					}
@@ -159,15 +170,118 @@ public class Levels
 		return thisArray;
 	}*/
 
-/*	public void loadLevelXML(String filename) throws XMLStreamException
+	public void loadLevelXML(String filename, int areaID) throws XMLStreamException
 	{
 		ReadXML r = new ReadXML(filename);
+		ArrayList<Room> rList = null;
+		//ArrayList<String> words = null;
+		Room troom = null;
+		String tag = null;
+		String tagStart = null;
+		String tagEnd = null;
+		String adesc = null;
+		boolean areaFound = false;
+		String subclass = "";
+		int ID = 0;
+		String iName = "";
+		int iQty = 0;
+		boolean equip = false;
+
 		while (r.reader.hasNext())
 		{
-			r.reader.next();
-			if (r.getTag().equals("room")
+			int event = r.reader.next();
+			switch (r.getEventType())
 			{
-*/
+				case 0: //start
+					tagStart = r.getTag();
+					if (tagStart.equals("area"))
+					{
+						ID = Integer.parseInt(r.getAttrValue());
+						if (ID == areaID)
+						{
+							levelNum = ID;
+							areaFound = true;
+							rList = new ArrayList<Room>();
+
+						}
+					}
+
+
+					if (ID == areaID)
+					{
+						if (tagStart.equals("room"))
+						{
+							troom = new Room();
+							troom.setRoomNum(r.getAttrValue());
+						}
+
+						if (tagStart.equals("keywords"))
+						{
+							troom.setKeywords(r.getAttrValue());
+						}
+
+						if (tagStart.equals("item"))
+						{
+							subclass = r.getAttrValue();
+						}
+
+					}
+					break;
+				case 1: //characters
+					if (ID == areaID)
+					{
+						tag = r.getText();
+					}
+					break;
+				case 2:
+					if(ID == areaID)
+					{
+						tagEnd = r.getTag();
+						switch (tagEnd)
+						{
+							case "room":
+								rList.add(troom);
+								break;
+							case "description":
+								troom.setDesc(tag);
+								break;
+							case "descOnComplete":
+								troom.setDescComplete(tag);
+								break;
+							case "word":
+								troom.addListKeyword(tag);
+								break;
+						// inventory items (if they exist)
+							case "name":
+								iName = tag;
+								break;
+							case "qty":
+								iQty = Integer.parseInt(tag);
+							case "equip":
+								equip = Boolean.parseBoolean(tag);
+								break;
+							case "desc":
+								String idesc = tag;
+								InvItem temp = new InvItem(iName, idesc, false);
+								Player.addInvItem(iName, iQty, equip, true, troom.getRoomNum(), temp);
+								break;
+
+
+						}
+					}
+					break;
+			}
+		}
+		if ((rList != null) && (!rList.isEmpty()))
+		{
+			room.addAll(rList);
+		}
+		/*if ((listKeyword != null) && (!listKeyword.isEmpty()));
+		{
+			listKeyword.addAll(words);
+		}*/
+	}
+
 
 
 	public void loadLevel()

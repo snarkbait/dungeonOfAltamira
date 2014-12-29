@@ -1,185 +1,233 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <level>
-  <room>
-    <roomID>
-      1001
-    </roomID>
-    <keywords>
-      <word>
-        none
-      </word>
-    </keywords>
-    <description>
-      You awaken into a dimly lit room, unaware of what has happened to you. Your clothes are dirty rags, you seem to have no possesions or armor. The room is fairly large, and smells damp and musty. Piles of refuse litter the room, and there is no furniture save a large, beaten table in the center of the room. The only exit seems to be a large iron gate to the north.
-    </description>
-    <items/>
-  </room>
-  <room>
-    <roomiD>
-      1002
-    </roomiD>
-    <keywords>
-      <word type = "ACTION">
-        look
-      </word>
-      <word type ="ACTION">
-        examine
-      </word>
-      <word type="ACTION">
-        search
-      </word>
-      <word type ="THING">
-        trash
-      </word>
-      <word type="THING">
-        piles
-      </word>
-      <word type =" THING">
-        refuse
-      </word>
-    </keywords>
-    <description>
-      After some searching, you find a loaf of stale bread, and a small dagger in a scabbard.
-    </description>
-    <descOnComplete>
-      There is nothing here but random trash.
-    </descOnComplete>
-    <items>
-      <item subclass ="food">
-        <name>
-          bread
-        </name>
-        <qty>
-          1
-        </qty>
-        <equip>
-          false
-        </equip>
-        <desc>
-          A loaf of hard, stale bread.
-        </desc>
-        <health>
-          5
-        </health>
-      </item>
-      <item subclass="weapon">
-        <name>
-          dagger
-        </name>
-        <qty>
-          1
-        </qty>
-        <equip>
-          true
-        </equip>
-        <desc>
-          A rusty, but fairly sharp dagger with no other distinguishing characteristics.
-        </desc>
-        <damage>
-          10
-        </damage>
-      </item>
-    </items>
-  </room>
-  <room>
-    <roomID>1003</roomID>
-    <keywords>
-      <word type ="ACTION">
-        look
-      </word>
-      <word type ="ACTION">
-       search
-      </word>
-      <word type ="ACTION">
-        examine
-      </word>
-      <word type ="THING">
-        table
-      </word>
-    </keywords>
-    <description>
-      On the table is a pewter candalabra, devoid of candles. The table has mysterious words burned into it.
-    </description>
-    <items/>
-  </room>
-  <room>
-    <roomID>1004</roomID>
-    <keywords>
-      <word type ="ACTION">
-        pick
-      </word>
-      <word type ="ACTION">
-         move
-       </word>
-      <word type="ACTION">
-       push
-      </word>
-      <word type="THING">
-       table
-      </word>
-    </keywords>
-    <description>
-      The table is too heavy to move.
-    </description>
-  </room>
-  <room>
-    <roomiD>1005</roomiD>
-    <keywords>
-      <word type="ACTION">
-        grab
-      </word>
-      <word type="ACTION">
-        pick
-      </word>
-      <word type ="ACTION">
-        take
-      </word>
-      <word type="THING">
-        candalabra
-      </word>
-    </keywords>
-    <description>
-      It appears to be attached to the table, but can be moved slightly in one direction.
-    </description>
-  </room>
-  <room>
-    <roomID>1006</roomID>
-    <keywords>
-      <word type="ACTION">
-        push
-      </word>
-      <word type="ACTION">
-        pull
-      </word>
-      <word type="ACTION">
-        move
-      </word>
-      <word type="THING">
-        candalabra
-      </word>
-    </keywords>
-    <description>
-      You hear a clanging, grinding noise from far off, and the iron gate slowly begins to move upwards until it is mostly open, billowing clouds of rusty dust.
-    </description>
-    <descOnComplete>
-      Nothing happens.
-    </descOnComplete>
-  </room>
-  <room>
-    <roomID>1007</roomID>
-    <keywords>
-      <word type="ACTION">
-        look
-      </word>
-      <word type="ACTION">
-        read
-      </word>
-      <word type="ACTION">
-        examine
-      </word>
-      <word type="THING">
-        words
-      </word>
-    </keywords>
-  </room>
+  <area id="1">
+    <room id="1001">
+      <keywords>
+        <word>
+          none
+        </word>
+      </keywords>
+      <description>
+        You awaken into a dimly lit room, unaware of what has happened to you. Your clothes are dirty rags, you seem to have no possesions or armor. The room is fairly large, and smells damp and musty. Piles of refuse litter the room, and there is no furniture save a large, beaten table in the center of the room. The only exit seems to be a large iron gate to the north.
+      </description>
+    </room>
+    <room id="1002">
+      <keywords num="6">
+        <word type = "ACTION">
+          look
+        </word>
+        <word type ="ACTION">
+          examine
+        </word>
+        <word type="ACTION">
+          search
+        </word>
+        <word type ="THING">
+          trash
+        </word>
+        <word type="THING">
+          piles
+        </word>
+        <word type =" THING">
+          refuse
+        </word>
+      </keywords>
+      <description>
+        After some searching, you find a loaf of stale bread, and a small dagger in a scabbard.
+      </description>
+      <descOnComplete>
+        There is nothing here but random trash.
+      </descOnComplete>
+      <items qty="2">
+        <item subclass ="food">
+          <name>
+            bread
+          </name>
+          <qty>
+            1
+          </qty>
+          <equip>
+            false
+          </equip>
+          <desc>
+            A loaf of hard, stale bread.
+          </desc>
+          <health>
+            5
+          </health>
+        </item>
+        <item subclass="weapon">
+          <name>
+            dagger
+          </name>
+          <qty>
+            1
+          </qty>
+          <equip>
+            true
+          </equip>
+          <desc>
+            A rusty, but fairly sharp dagger with no other distinguishing characteristics.
+          </desc>
+          <damage>
+            10
+          </damage>
+        </item>
+      </items>
+    </room>
+    <room id="1003">
+      <keywords num="4">
+        <word type ="ACTION">
+          look
+        </word>
+        <word type ="ACTION">
+          search
+        </word>
+        <word type ="ACTION">
+          examine
+        </word>
+        <word type ="THING">
+          table
+        </word>
+      </keywords>
+      <description>
+        On the table is a pewter candalabra, devoid of candles. The table has mysterious words burned into it.
+      </description>
+    </room>
+    <room id="1004">
+      <keywords num="4">
+        <word type ="ACTION">
+          pick
+        </word>
+        <word type ="ACTION">
+          move
+        </word>
+        <word type="ACTION">
+          push
+        </word>
+        <word type="THING">
+          table
+        </word>
+      </keywords>
+      <description>
+        The table is too heavy to move.
+      </description>
+    </room>
+    <room id="1005">
+      <keywords num="4">
+        <word type="ACTION">
+          grab
+        </word>
+        <word type="ACTION">
+          pick
+        </word>
+        <word type ="ACTION">
+          take
+        </word>
+        <word type="THING">
+          candalabra
+        </word>
+      </keywords>
+      <description>
+        It appears to be attached to the table, but can be moved slightly in one direction.
+      </description>
+    </room>
+    <room id="1006">
+      <keywords num="4">
+        <word type="ACTION">
+          push
+        </word>
+        <word type="ACTION">
+          pull
+        </word>
+        <word type="ACTION">
+          move
+        </word>
+        <word type="THING">
+          candalabra
+        </word>
+      </keywords>
+      <description>
+        You hear a clanging, grinding noise from far off, and the iron gate slowly begins to move upwards until it is mostly open, billowing clouds of rusty dust.
+      </description>
+      <descOnComplete>
+        Nothing happens.
+      </descOnComplete>
+    </room>
+    <room id="1007">
+      <keywords num="4">
+        <word type="ACTION">
+          look
+        </word>
+        <word type="ACTION">
+          read
+        </word>
+        <word type="ACTION">
+          examine
+        </word>
+        <word type="THING">
+          words
+        </word>
+      </keywords>
+      <description>
+        Wiping away layers of dust and grime, you see, burned into the wood of the table, "ABKRA BAKA SHAKULA"
+      </description>
+      <descOnComplete>You see the words "ABKRA BAKA SHAKULA". They mean nothing to you.</descOnComplete>
+    </room>
+    <room id="1008">
+      <keywords num="3">
+        <word type="action">open</word>
+        <word type="thing">door</word>
+        <word type="thing">gate</word>
+      </keywords>
+      <description>
+        The iron bars of the gate are rusty and old, and they do not budge.
+      </description>
+      <descOnComplete>The gate is already open.</descOnComplete>
+    </room>
+    <room id="1009">
+      <keywords num="2">
+        <word type="action">jump</word>
+        <word type="thing">table</word>
+      </keywords>
+      <description>You jump up on the table. Woohoo!</description>
+      <descOnComplete action="true">
+        you fall off, injuring yourself. (Hit Point -3). Dumbass.
+      </descOnComplete>
+      <action type="HP">-3</action>
+    </room>
+    <room id="1010">
+      <keywords num ="2">
+        <word type="action">climb</word>
+        <word type="thing">walls</word>
+      </keywords>
+      <description>The walls are unclimbable.</description>
+    </room>
+    <room id="exit">
+      <exit num ="1"></exit>
+      <keywords num="7">
+        <word type="action">exit</word>
+        <word type="action">go</word>
+        <word type="action">leave</word>
+        <word type="thing">room</word>
+        <word type="thing">gate</word>
+        <word type="thing">door</word>
+        <word type="thing">north</word>
+      </keywords>
+      <description>You exit the room out the gate.</description>
+    </room>
+  </area>
+  <area id="2">
+    <room id="2001">
+      <keywords num="0">
+        <word>
+          none
+        </word>
+      </keywords>
+      <description>
+        You enter a dark , wide hallway. Large, broken pieces of furniture litter the floor.
+      </description>
+    </room>
+    
+  </area>
 </level>

@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
+import javax.xml.stream.XMLStreamException;
 
 
 public class GameGUI extends JFrame
@@ -106,14 +107,14 @@ public class GameGUI extends JFrame
 		}
 	}
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws XMLStreamException
 	{
 		String inString = "";
 		//Parser par = new Parser();
 		//Actions aw = new Actions();
 //		Player p = new Player();
 //		Levels level = new Levels();
-		level.loadLevel();
+		level.loadLevelXML("level1", 1);
 
 
 		//int wordIndex = -1;

@@ -14,7 +14,7 @@ public class Player
 
 	public static Random rndgen = new Random();
 
-	private ArrayList<Inventory> playerInventory;
+	private static ArrayList<Inventory> playerInventory;
 
 	public Player()
 	{
@@ -122,15 +122,15 @@ public class Player
 		return hunger;
 	}
 
-	public void addInvItem(String invItem, int qty)
+	public static void addInvItem(String invItem, int qty)
 	{
 		Inventory temp = new Inventory(invItem, qty, false, false, null);
 		playerInventory.add(temp);
 	}
 
-	public void addInvItem(String invItem, int qty,boolean eq, boolean gettable,String roomID)
+	public static void addInvItem(String invItem, int qty,boolean eq, boolean gettable,String roomID, InvItem detail)
 	{
-		Inventory temp = new Inventory(invItem, qty, false, false, null);
+		Inventory temp = new Inventory(invItem, qty, eq, gettable, roomID, detail);
 		playerInventory.add(temp);
 	}
 
@@ -154,7 +154,7 @@ public class Player
 		}
 	}
 
-	public void checkGettableItems(ArrayList<Room> room)
+/*	public void checkGettableItems(ArrayList<Room> room)
 	{
 		int count = 0;
 		for (Room rm : room)
@@ -175,7 +175,7 @@ public class Player
 				if (count > 0) { rm.setComplete( true ); }
 			}
 		}
-	}
+	}*/
 
 /*	public void listInventory()
 	{
@@ -201,7 +201,8 @@ public class Player
 		{
 			for (Inventory currentItem : playerInventory)
 			{
-				invList += currentItem.toString();
+				if (!currentItem.getGettable())
+				{invList += currentItem.toString();}
 			}
 		}
 		else

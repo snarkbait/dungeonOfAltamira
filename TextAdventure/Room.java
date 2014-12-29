@@ -36,6 +36,11 @@ public class Room
 		listKeyword = new ArrayList<String>();
 	}
 
+	public void setRoomNum(String num)
+	{
+		roomNum = num;
+	}
+
 	public String getRoomNum()
 	{
 		return roomNum;
@@ -46,14 +51,40 @@ public class Room
 		return Integer.parseInt(rmNum);
 	}
 
+	public void setKeywords(String kw)
+	{
+		keywords = kw;
+	}
+
 	public String getKeywords()
 	{
 		return keywords;
 	}
 
+	public void addListKeyword(String word)
+	{
+		listKeyword.add(word);
+	}
+
+	public ArrayList<String> getListKeyword()
+	{
+		return listKeyword;
+	}
+
+
+	public void setDesc(String d)
+	{
+		description = d;
+	}
+
 	public String getDesc()
 	{
 		return description;
+	}
+
+	public void setDescComplete(String d)
+	{
+		descOnComplete = d;
 	}
 
 	public String getDescComplete()

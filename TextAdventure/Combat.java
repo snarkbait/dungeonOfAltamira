@@ -4,7 +4,7 @@
 // TODO: compartmentalize the combat with playerTurn and monsterTurn methods
 // TODO: allow player to always have punch/kick attacktypes
 // TODO: use actual Player instance for the combat
-// TODO: cleanup the read xml file code (move to other class???)
+// TODO: cleanup the read xml file code
 // TODO: allow multiple-turn lasting damage hits i.e. poison
 // TODO: implement magic system
 
@@ -85,7 +85,6 @@ public class Combat
 			{
 				case 0: //start
 					tagStart = r.getTag();
-					//System.out.println("start:" + tagStart);
 					if (tagStart.equals("monster"))
 					{
 						m = new Monster();
@@ -105,14 +104,9 @@ public class Combat
 					break;
 				case 1:
 					tagContent = r.getText();
-					//System.out.println("Text:" + tagContent);
 					break;
 				case 2:
 					tagEnd = r.getTag();
-					//System.out.println("End:" + tagEnd);
-
-					//if (!tagContent.isEmpty())
-					//{
 					switch (tagEnd)
 					{
 						case "monster":
@@ -154,7 +148,6 @@ public class Combat
 							count++;
 							break;
 					}
-				//}
 					break;
 
 				}
