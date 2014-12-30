@@ -1,5 +1,5 @@
 /* Actions class
-
+		reads text file full of 'action words' to test from the parser
 */
 import java.io.FileReader;
 import java.io.BufferedReader;

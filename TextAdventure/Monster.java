@@ -13,7 +13,11 @@ public class Monster
 	private int hpMax;
 	private int numAttacks;
 
-	private Weapon.AttackType[] attackType;
+/*
+ Using multiple arrays with the same index instead of another class, true OOP nerds would probably have a heart attack, but it was just quicker.
+
+*/
+	private Weapon.AttackType[] attackType; // enum from Weapon class
 	private String[] attackDesc;
 	private int[] attackDamage;
 	private int[] attackDmgModifier;

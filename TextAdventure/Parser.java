@@ -10,8 +10,19 @@ public class Parser
 {
 	private String inLine;
 	private ArrayList<String> inList;
+
+	// words that do not require the response to use 'the' like 'look down'
 	private final String [] articleList = {"the","a","at","up","down","over","around","with","in","to","from","all"};
+
+	// menu words that can be used anywhere
 	private final String [] menuCommands = {"quit","stats","inventory","inv","take","grab"};
+	/*				QUIT = 0
+					STATS = 1
+					INVENTORY = 2
+					INV = 3
+					TAKE = 4
+					GRAB = 5
+	*/
 
 	// default constructor
 
@@ -25,6 +36,14 @@ public class Parser
 		inLine = inputLine;
 	}
 
+/* method getInputLine
+used only for console version of application
+
+@params boolean lower
+				convert all text to lowercase
+		String prompt
+				text to display to the left of input are ('>')
+*/
 	public String getInputLine(boolean lower,String prompt)
 	{
 
@@ -61,13 +80,14 @@ public class Parser
 		this.inLine = inLine;
 	}
 
-
+/* tokenize input string into arraylist inList
+.
+*/
 	public void tokenize(String inString)
 	{
 		inList = new ArrayList<String>();
 		StringTokenizer stok = new StringTokenizer(inString);
 		String nextWord = "";
-		//System.out.println( stok.countTokens());
 		while (stok.hasMoreTokens())
 		{
 			nextWord = stok.nextToken();

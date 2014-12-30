@@ -35,9 +35,10 @@
       <description>
         After some searching, you find a loaf of stale bread, and a small dagger in a scabbard.
       </description>
-      <descOnComplete>
+      <descOnComplete action="true">
         There is nothing here but random trash.
       </descOnComplete>
+      <action type="ITEM"></action>
       <items qty="2">
         <item subclass ="food">
           <name>
@@ -158,7 +159,7 @@
       <description>
         You hear a clanging, grinding noise from far off, and the iron gate slowly begins to move upwards until it is mostly open, billowing clouds of rusty dust.
       </description>
-      <descOnComplete>
+      <descOnComplete action="false">
         Nothing happens.
       </descOnComplete>
     </room>
@@ -180,7 +181,7 @@
       <description>
         Wiping away layers of dust and grime, you see, burned into the wood of the table, "ABKRA BAKA SHAKULA"
       </description>
-      <descOnComplete>You see the words "ABKRA BAKA SHAKULA". They mean nothing to you.</descOnComplete>
+      <descOnComplete action="false">You see the words "ABKRA BAKA SHAKULA". They mean nothing to you.</descOnComplete>
     </room>
     <room id="1008">
       <keywords num="3">
@@ -191,7 +192,8 @@
       <description>
         The iron bars of the gate are rusty and old, and they do not budge.
       </description>
-      <descOnComplete>The gate is already open.</descOnComplete>
+      <descOnComplete action="true">The gate is already open.</descOnComplete>
+      <action type="roomID">1006</action>
     </room>
     <room id="1009">
       <keywords num="2">
@@ -200,7 +202,7 @@
       </keywords>
       <description>You jump up on the table. Woohoo!</description>
       <descOnComplete action="true">
-        you fall off, injuring yourself. (Hit Point -3). Dumbass.
+        You fall off, injuring yourself. (Hit Point -3). Dumbass.
       </descOnComplete>
       <action type="HP">-3</action>
     </room>
@@ -247,9 +249,10 @@
       <description>
         Among the piles of broken furniture, you find a small vial with a purple liquid in it.
       </description>
-      <descOnComplete>
+      <descOnComplete action="true">
         Just a bunch of broken furniture.
       </descOnComplete>
+      <action type="ITEM"></action>
       <items qty="1">
         <item subclass="potion">
           <name>
@@ -284,12 +287,12 @@
       <description>
         As you move downb the hallway, you hear rustling and footsteps approaching...\n
       </description>
-      <descOnComplete>
+      <descOnComplete action="true">
         More junk on the floor, and a dead goblin.\n
       </descOnComplete>
       <action type="MONSTER">
         <ID>103</ID>
-        <onDeath>
+        <onDeath exp="250">
           The goblin is dead.
         </onDeath>
       </action>
@@ -305,7 +308,7 @@
       <description>
         You loot the goblin corpse, there is some leather armor that looks like it will fit you, and 5 gold pieces.\n
       </description>
-      <descOnComplete>Just a dead, now naked goblin. Don't get any ideas.</descOnComplete>
+      <descOnComplete action="false">Just a dead, now naked goblin. Don't get any ideas.</descOnComplete>
       <items qty="2">
         <item subclass="armor">
           <name>Leather Armor</name>

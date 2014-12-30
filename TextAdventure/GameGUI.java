@@ -70,12 +70,26 @@ public class GameGUI extends JFrame
 		public void actionPerformed(ActionEvent e)
 		{
 			String response = "";
+
+			// read input line
 			inputLine = inputArea.getText();
+
+			// push to 'console'
 			console.append(">" + inputLine + newline);
+
+			// clear text box
 			inputArea.setText("");
+
+			// create parser
 			Parser par = new Parser(inputLine);
+
+			// tokenize
 			par.tokenize(inputLine);
+
+			// test first word as valid action
 			int wordIndex = aw.testWord(par.getWord(0));
+
+			// test if action word is menu command
 			int command = par.checkMenuCommands(par.getWord(0));
 				switch (command)
 				{
@@ -90,31 +104,46 @@ public class GameGUI extends JFrame
 						break;
 					case 4:
 					case 5: // take item
-						response = par.getResponse(wordIndex);
+						response = par.getResponse(wordIndex); // TODO: fix this, not getting full response
 						console.append(response + newline);
+
+						// loop through parsed input words, starting after first word
 						for (int i = 1; i < par.getListSize(); i++)
 						{
+							// see if item is in inventory list with status 'gettable' meaning, available in area but not 'picked up' by player yet
 							int getitem = p.findGettableItem(par.getWord(i));
+
 							if (getitem >= 0)
 							{
-								System.out.println("found item: " + getitem);
+								//System.out.println("found item: " + getitem); //:DEBUG:
+
+								// check if player is in the proper place to pick up the item
 								if (p.getInvRoomID(getitem).equals(Levels.getRoomIndex()))
 								{
 									p.setInvGettable(getitem);
+								}
+								else
+								{
+									console.append("You cannot do that here." + newline);
 								}
 							}
 						}
 						break;
 					default:
+
+						// not a menu command, return response like "you _____ the ______"
 						response = par.getResponse(wordIndex);
 						console.append(response + newline);
 						if (wordIndex != -1)
 						{
+
+							// take the action (go to next 'room')
 							int roomIndex = level.processAction(par, p);
 							if (roomIndex != -1)
 							{
 								console.append(level.getRoomDesc(roomIndex));
-								//p.checkGettableItems(level.getRoom(roomIndex));
+								// set area 'complete' --- note TODO: some areas need completion from other events. fix.
+								level.setRoomComplete(roomIndex);
 							}
 						}
 
@@ -127,19 +156,13 @@ public class GameGUI extends JFrame
 	public static void main(String[] args) throws XMLStreamException
 	{
 		String inString = "";
-		//Parser par = new Parser();
-		//Actions aw = new Actions();
-//		Player p = new Player();
-//		Levels level = new Levels();
 		level.loadLevelXML("level1", 1);
 
 
-		//int wordIndex = -1;
 
-		//aw.loadActions(); // read action words from text file actions.txt
-
-		//p.setName(par.getInputLine(false,"Please enter your character's name:"));
 		p.setName(JOptionPane.showInputDialog(null,"Please enter your character's name"));
+
+		// temporary settings for testing
 		p.setHitPoints(Player.getRandomInt(10,15));
 		p.setPlayerLevel(1);
 		p.setHunger(100);
@@ -147,7 +170,6 @@ public class GameGUI extends JFrame
 
 		GameGUI gameGUI = new GameGUI();
 		gameGUI.appendConsole(level.getRoomDesc(0));
-		//gameGUI.appendConsole(p.listInvGUI());
 		gameGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

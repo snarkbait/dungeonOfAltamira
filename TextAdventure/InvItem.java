@@ -1,9 +1,17 @@
-// inventory item superclass
+/* inventory item superclass
+
+extended by Weapon, Armor, Food, Potion classes, and more possible
+
+this class is used by the Inventory class as an arraylist. itemName should be same as Inventory.item
+
+
+by snarkbait 2014
+*/
 
 public class InvItem
 {
-	public String itemName;
-	public String itemDesc;
+	public String itemName;	 // same as Inventory.item
+	public String itemDesc;	// short description of item, not used yet
 	public boolean isEquip; // is equippable, i.e. weapon or armor, not 'is equipped' which is in inventory class
 
 	public InvItem()

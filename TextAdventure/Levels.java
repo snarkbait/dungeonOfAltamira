@@ -14,15 +14,13 @@ public class Levels
 	private int levelNum;
 	private static int currentRoomIndex;
 	private ArrayList<Room> room;
-	private ArrayList<Inventory> inv;
-	//private ArrayList<String> listKeyword;
+//	private ArrayList<Inventory> inv;
 
 	public Levels()
 	{
 		levelNum = 0;
 		currentRoomIndex = 0;
 		room = new ArrayList<Room>();
-		//listKeyword = new ArrayList<String>();
 	}
 
 	public ArrayList<Room> getRoomList()
@@ -45,13 +43,14 @@ public class Levels
 		return String.valueOf(currentRoomIndex);
 	}
 
+
 	public int processAction(Parser par,Player p) // returns index of room
 	{
 		int index = -1;
 		int count = 0;
 		boolean hasBoth = false;
 		int fIndex = -1; // index of found set
-		int roomIDX = -1;
+		int roomIDX = -1; // room index within arraylist, not field 'roomNum'
 		for (Room rm : room)
 		{
 			String currentWord = par.getWord(0); // get action word
@@ -60,7 +59,7 @@ public class Levels
 			{
 				count++;
 				roomIDX = room.indexOf(rm);
-				System.out.println("index of occurance " + currentWord + count + ": " + roomIDX);
+				//System.out.println("index of occurance " + currentWord + count + ": " + roomIDX); //:DEBUG:
 				// look for next words
 				for (int i = 1; i < par.getListSize(); i++)
 				{
@@ -72,9 +71,8 @@ public class Levels
 						{
 							fIndex = roomIDX;
 							currentRoomIndex = Integer.parseInt(rm.getRoomNum());
+							//rm.setComplete(true);
 							hasBoth = true;
-							//p.checkGettableItems(room);
-							//System.out.println("next word found : " + currentWord);
 						}
 					}
 				}
@@ -83,59 +81,6 @@ public class Levels
 		}
 		return fIndex;
 	}
-
-
-/*
-	public int checkKeywords(Parser par)
-	{
-
-		boolean hasAction = false;
-		boolean hasOther = false;
-		int index = -1;
-		int roomID = -1;
-		int roomID2 = -1;
-
-		for (Room rm: room)
-		{
-			for (int i = 0; i < par.getListSize(); i++)
-			{
-				String currentWord = par.getWord(i);
-				index = rm.testWord(currentWord);
-				if (index != -1)
-				{
-					if (i == 0)
-					{
-						if (!hasAction)
-						{
-							hasAction = true;
-							//roomID = rm.intRoomNum(rm.getRoomNum());
-							roomID = room.indexOf(rm);
-							System.out.println("roomid 1:" + roomID + ":" + roomID2);
-
-						}
-					}
-					else
-					{
-						if (hasAction == true)
-						{
-							hasOther = true;
-							roomID2 = room.indexOf(rm);
-							System.out.println("Roomid 2:" + roomID2+ ":" + roomID);
-							hasAction = false;
-							hasOther = false;
-						}
-					}
-					System.out.println(roomID + ":" + roomID2);
-					//if (roomID != roomID2)
-					//{
-					//	roomID = -1;
-					//}
-				}
-			}
-		}
-		//System.out.println(room.indexOf(Integer.toString(roomID)));
-		return roomID;
-	}*/
 
 	public Room getRoom(int index)
 	{
@@ -151,9 +96,21 @@ public class Levels
 		if (index < room.size())
 		{
 			rm = room.get(index);
-			desc = rm.getDesc();
+			if (!rm.isComplete())
+			{
+				desc = rm.getDesc();
+			}
+			else
+			{
+				desc = rm.getDescComplete();
+			}
 		}
 		return desc;
+	}
+
+	public void setRoomComplete(int index)
+	{
+		room.get(index).setComplete(true);
 	}
 
 
