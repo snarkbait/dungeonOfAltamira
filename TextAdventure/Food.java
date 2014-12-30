@@ -2,27 +2,27 @@
 
 public class Food extends InvItem
 {
-	public int healthBonus;
+	public int hungerBonus;
 
 	public Food()
 	{
-		healthBonus = 0;
+		hungerBonus = 0;
 	}
 
-	public Food(String name, String desc, boolean equip, int health)
+	public Food(String name, String desc, boolean equip, int hunger)
 	{
 		super( name, desc, equip);
-		healthBonus = health;
+		hungerBonus = hunger;
 	}
 
-	public void setHealth(int health)
+	public void setHunger(int hunger)
 	{
-		healthBonus = health;
+		hungerBonus = hunger;
 	}
 
-	public int getHealth()
+	public int getHunger()
 	{
-		return healthBonus;
+		return hungerBonus;
 	}
 
 }

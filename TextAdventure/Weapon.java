@@ -16,6 +16,12 @@ public class Weapon extends InvItem
 		damage = 0;
 	}
 
+	public Weapon(String name, String desc, boolean equip, int dmg)
+	{
+		super(name, desc,equip);
+		damage = dmg;
+	}
+
 	public Weapon(String name, String desc, boolean equip, int dmg, int numTypes)
 	{
 		super(name, desc, equip);

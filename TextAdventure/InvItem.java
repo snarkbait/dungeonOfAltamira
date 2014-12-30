@@ -4,7 +4,7 @@ public class InvItem
 {
 	public String itemName;
 	public String itemDesc;
-	public boolean isEquip;
+	public boolean isEquip; // is equippable, i.e. weapon or armor, not 'is equipped' which is in inventory class
 
 	public InvItem()
 	{

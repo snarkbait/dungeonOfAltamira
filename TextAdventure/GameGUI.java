@@ -69,15 +69,15 @@ public class GameGUI extends JFrame
 	{
 		public void actionPerformed(ActionEvent e)
 		{
+			String response = "";
 			inputLine = inputArea.getText();
 			console.append(">" + inputLine + newline);
 			inputArea.setText("");
 			Parser par = new Parser(inputLine);
 			par.tokenize(inputLine);
 			int wordIndex = aw.testWord(par.getWord(0));
-			//if (wordIndex != -1)
-			//{
-				switch (par.checkMenuCommands(par.getWord(0)))
+			int command = par.checkMenuCommands(par.getWord(0));
+				switch (command)
 				{
 					case 0:	//quit
 						System.exit(0);
@@ -86,10 +86,27 @@ public class GameGUI extends JFrame
 						break;
 					case 2:
 					case 3:	//inventory
-						console.append(p.listInvGUI());
+						console.append(p.listInvGUI(false));
+						break;
+					case 4:
+					case 5: // take item
+						response = par.getResponse(wordIndex);
+						console.append(response + newline);
+						for (int i = 1; i < par.getListSize(); i++)
+						{
+							int getitem = p.findGettableItem(par.getWord(i));
+							if (getitem >= 0)
+							{
+								System.out.println("found item: " + getitem);
+								if (p.getInvRoomID(getitem).equals(Levels.getRoomIndex()))
+								{
+									p.setInvGettable(getitem);
+								}
+							}
+						}
 						break;
 					default:
-						String response = par.getResponse(wordIndex);
+						response = par.getResponse(wordIndex);
 						console.append(response + newline);
 						if (wordIndex != -1)
 						{
@@ -126,9 +143,6 @@ public class GameGUI extends JFrame
 		p.setHitPoints(Player.getRandomInt(10,15));
 		p.setPlayerLevel(1);
 		p.setHunger(100);
-		p.addInvItem("Bread",1);
-		p.addInvItem("Dagger",1);
-		p.addInvItem("Health Potion",2);
 
 
 		GameGUI gameGUI = new GameGUI();

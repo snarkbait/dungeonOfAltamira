@@ -40,9 +40,9 @@ public class Levels
 		return levelNum;
 	}
 
-	public static int getRoomIndex()
+	public static String getRoomIndex()
 	{
-		return currentRoomIndex;
+		return String.valueOf(currentRoomIndex);
 	}
 
 	public int processAction(Parser par,Player p) // returns index of room
@@ -71,6 +71,7 @@ public class Levels
 						if (!hasBoth)
 						{
 							fIndex = roomIDX;
+							currentRoomIndex = Integer.parseInt(rm.getRoomNum());
 							hasBoth = true;
 							//p.checkGettableItems(room);
 							//System.out.println("next word found : " + currentWord);
@@ -174,6 +175,7 @@ public class Levels
 	{
 		ReadXML r = new ReadXML(filename);
 		ArrayList<Room> rList = null;
+		Weapon.AttackType atk = null;
 		//ArrayList<String> words = null;
 		Room troom = null;
 		String tag = null;
@@ -186,6 +188,15 @@ public class Levels
 		String iName = "";
 		int iQty = 0;
 		boolean equip = false;
+		int iHealth = 0;
+		int iHunger = 0;
+		int iDamage = 0;
+		int aNum = 0;
+		int aCount = 0;
+		int dMod = 0;
+		int hit = 0;
+		String idesc = null;
+
 
 		while (r.reader.hasNext())
 		{
@@ -194,6 +205,7 @@ public class Levels
 			{
 				case 0: //start
 					tagStart = r.getTag();
+					//System.out.println(tagStart);
 					if (tagStart.equals("area"))
 					{
 						ID = Integer.parseInt(r.getAttrValue());
@@ -222,7 +234,18 @@ public class Levels
 
 						if (tagStart.equals("item"))
 						{
-							subclass = r.getAttrValue();
+							if (subclass == "")
+							{
+									subclass = r.getAttrValue();
+									//System.out.println("sc:" + subclass);
+							}
+						}
+
+						if (tagStart.equals("attacks"))
+						{
+							aNum = Integer.parseInt(r.getAttrValue());
+							//System.out.println("anum:" + aNum);
+							aCount = 0;
 						}
 
 					}
@@ -257,13 +280,46 @@ public class Levels
 								break;
 							case "qty":
 								iQty = Integer.parseInt(tag);
+								break;
 							case "equip":
 								equip = Boolean.parseBoolean(tag);
 								break;
+							case "hunger":
+								iHunger = Integer.parseInt(tag);
+								break;
 							case "desc":
-								String idesc = tag;
-								InvItem temp = new InvItem(iName, idesc, false);
-								Player.addInvItem(iName, iQty, equip, true, troom.getRoomNum(), temp);
+								idesc = tag;
+								if (subclass.equalsIgnoreCase("food"))
+								{
+									InvItem temp = new Food(iName, idesc, false, iHunger);
+									Player.addInvItem(iName, iQty, equip, true, troom.getRoomNum(), temp);
+									subclass = "";
+								}
+								else
+								{
+								}
+								break;
+							case "damage":
+								iDamage = Integer.parseInt(tag);
+								break;
+							case "attackType":
+								atk = Weapon.AttackType.valueOf(tag);
+								break;
+							case "dmgMod":
+								dMod = Integer.parseInt(tag);
+								break;
+							case "toHitMod":
+								hit = Integer.parseInt(tag);
+								if (subclass.equalsIgnoreCase("weapon"))
+								{
+									//System.out.println("c:" + aCount);
+									//System.out.println("an:" + aNum);
+									Weapon wtemp = new Weapon(iName, idesc, false, iDamage, aNum);
+									wtemp.addAttack(aCount, atk, dMod, hit);
+									aCount++;
+									Player.addInvItem(iName, iQty, equip, true, troom.getRoomNum(), wtemp);
+									subclass = "";
+								}
 								break;
 
 

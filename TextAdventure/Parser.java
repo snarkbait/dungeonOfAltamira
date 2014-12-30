@@ -11,7 +11,7 @@ public class Parser
 	private String inLine;
 	private ArrayList<String> inList;
 	private final String [] articleList = {"the","a","at","up","down","over","around","with","in","to","from","all"};
-	private final String [] menuCommands = {"quit","stats","inventory","inv"};
+	private final String [] menuCommands = {"quit","stats","inventory","inv","take","grab"};
 
 	// default constructor
 

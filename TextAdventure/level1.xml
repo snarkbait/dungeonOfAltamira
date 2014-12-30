@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <level>
   <area id="1">
     <room id="1001">
@@ -52,9 +52,9 @@
           <desc>
             A loaf of hard, stale bread.
           </desc>
-          <health>
+          <hunger>
             5
-          </health>
+          </hunger>
         </item>
         <item subclass="weapon">
           <name>
@@ -72,7 +72,15 @@
           <damage>
             10
           </damage>
-        </item>
+          <attacks num ="2">
+            <attackType>SLASH</attackType>
+            <dmgMod>0</dmgMod>
+            <toHitMod>0</toHitMod>
+            <attackType>STAB</attackType>
+            <dmgMod>1</dmgMod>
+            <toHitMod>5</toHitMod>
+          </attacks>
+         </item>
       </items>
     </room>
     <room id="1003">
@@ -225,9 +233,97 @@
         </word>
       </keywords>
       <description>
-        You enter a dark , wide hallway. Large, broken pieces of furniture litter the floor.
+        You enter a dark , long, wide hallway facing north. Large, broken pieces of furniture litter the floor.\n
       </description>
     </room>
-    
+    <room id="2002">
+      <keywords num="5">
+        <word type="ACTION">look</word>
+        <word type="ACTION">search</word>
+        <word type="ACTION">examine</word>
+        <word type="THING">floor</word>
+        <word type=" THING">furniture</word>
+      </keywords>
+      <description>
+        Among the piles of broken furniture, you find a small vial with a purple liquid in it.
+      </description>
+      <descOnComplete>
+        Just a bunch of broken furniture.
+      </descOnComplete>
+      <items qty="1">
+        <item subclass="potion">
+          <name>
+            health potion
+          </name>
+          <qty>
+            1
+          </qty>
+          <equip>
+            false
+          </equip>
+          <desc>
+            A small glass vial with a purple liquid in it. (Hit Points + 5, Hunger + 10)\n
+          </desc>
+          <health>
+            5
+          </health>
+          <hunger>
+            10
+          </hunger>
+        </item>
+      </items>
+    </room>
+    <room id="2003">
+      <keywords num="5">
+        <word type="ACTION">go</word>
+        <word type="ACTION">walk</word>
+        <word type="THING">hallway</word>
+        <word type="THING">hall</word>
+        <word type="THING">north</word>
+      </keywords>
+      <description>
+        As you move downb the hallway, you hear rustling and footsteps approaching...\n
+      </description>
+      <descOnComplete>
+        More junk on the floor, and a dead goblin.\n
+      </descOnComplete>
+      <action type="MONSTER">
+        <ID>103</ID>
+        <onDeath>
+          The goblin is dead.
+        </onDeath>
+      </action>
+    </room>
+    <room id="2004">
+      <keywords num="5">
+        <word type="ACTION">search</word>
+        <word type="ACTION">look</word>
+        <word type="THING">goblin</word>
+        <word type="THING">body</word>
+        <word type="THING">corpse</word>
+      </keywords>
+      <description>
+        You loot the goblin corpse, there is some leather armor that looks like it will fit you, and 5 gold pieces.\n
+      </description>
+      <descOnComplete>Just a dead, now naked goblin. Don't get any ideas.</descOnComplete>
+      <items qty="2">
+        <item subclass="armor">
+          <name>Leather Armor</name>
+          <qty>
+            1
+          </qty>
+          <equip>
+            true
+          </equip>
+          <desc>
+            A tough leather armored shirt and pants. (AC +1)
+          </desc>
+          <ACBonus>1</ACBonus>
+        </item>
+        <item subclass="gold">
+          <qty>5</qty>
+        </item>
+      </items>
+    </room>
   </area>
 </level>

@@ -6,11 +6,13 @@ public class Player
 {
 	private String playerName;
 	private int hitPoints;
+	private int hpMax;
 	private int expPoints;
 	private int gold;
 	private int playerLevel;
 	private int armorClass;
 	private int hunger;
+	private int toHit;
 
 	public static Random rndgen = new Random();
 
@@ -20,25 +22,63 @@ public class Player
 	{
 		playerName = "";
 		hitPoints = 0;
+		hpMax = 0;
 		expPoints = 0;
 		gold = 0;
 		playerLevel = 0;
 		armorClass = 0;
 		hunger = 0;
+		toHit = 0;
 
 		playerInventory = new ArrayList<Inventory>();
 	}
 
-	public Player(String name,int hp,int exp,int g,int lvl,int ac, int hr)
+	public Player(String name,int max, int exp,int g,int lvl,int ac, int hr)
 	{
 		playerName = name;
-		hitPoints = hp;
+		hitPoints = max;
+		hpMax = max;
 		expPoints = exp;
 		gold = g;
 		playerLevel = lvl;
 		armorClass = ac;
 		hunger = hr;
 		playerInventory = new ArrayList<Inventory>();
+	}
+
+	public int findInventoryItem(String word)
+	{
+		for (Inventory current : playerInventory)
+		{
+			if (word.equals(current.getItem()))
+			{
+				return playerInventory.indexOf(current);
+			}
+		}
+		return -1;
+	}
+
+	public int findGettableItem(String word)
+	{
+		int g = this.findInventoryItem(word);
+		if (g >= 0)
+		{
+			if (playerInventory.get(g).getGettable())
+			{
+				return g;
+			}
+		}
+		return -1;
+	}
+
+	public String getInvRoomID(int index)
+	{
+		return playerInventory.get(index).getRoomID();
+	}
+
+	public void setInvGettable(int index)
+	{
+		playerInventory.get(index).setGettable(false);
 	}
 
 
@@ -62,9 +102,28 @@ public class Player
 		return hitPoints;
 	}
 
+	public void setHpMax(int max)
+	{
+		hpMax = max;
+	}
+
+	public int getHpMax()
+	{
+		return hpMax;
+	}
+
+
 	public void addHP(int amt)
 	{
 		hitPoints = hitPoints + amt;
+		if (hitPoints > hpMax)
+		{
+			hitPoints = hpMax;
+		}
+		if (hitPoints <= 0)
+		{
+			// to do: death sequence
+		}
 	}
 
 	public void setExpPoints(int exp)
@@ -79,7 +138,7 @@ public class Player
 
 	public void addEXP(int amt)
 	{
-		expPoints = expPoints + amt;
+		expPoints += amt;
 	}
 
 	public void setGold(int g)
@@ -120,6 +179,25 @@ public class Player
 	public int getHunger()
 	{
 		return hunger;
+	}
+
+	public void addHunger(int amt)
+	{
+		hunger += amt;
+		if (hunger > 100) { hunger = 100; }
+		if (hunger < 10) {} //todo: initiate low hunger sequence
+	}
+
+	public int getToHit()
+	{
+		return toHit;
+	}
+
+	public void calcToHit()
+	{
+		toHit = ((playerLevel * 5)/10) - 1;
+		if (toHit < 0){ toHit = 0; }
+		if (toHit > 9){ toHit = 9; }
 	}
 
 	public static void addInvItem(String invItem, int qty)
@@ -194,15 +272,27 @@ public class Player
 		System.out.println("====================================");
 	}*/
 
-	public String listInvGUI()
+	public String listInvGUI(boolean gettable)
 	{
 		String invList=("===========Inventory============" + "\n");
 		if (playerInventory.size() > 0)
 		{
 			for (Inventory currentItem : playerInventory)
 			{
-				if (!currentItem.getGettable())
-				{invList += currentItem.toString();}
+				if (gettable)
+				{
+					if (currentItem.getGettable())
+					{
+						invList += currentItem.toString();
+					}
+				}
+				else
+				{
+					if (!currentItem.getGettable())
+					{
+						invList += currentItem.toString();
+					}
+				}
 			}
 		}
 		else
