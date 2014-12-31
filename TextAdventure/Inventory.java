@@ -94,6 +94,7 @@ public class Inventory
 	{
 		String outString= qty + " " + item;
 		if (qty > 1) { outString += "(s)";}
+		outString += "  : " + itemDetail.getDesc();
 		outString += "\n";
 		return outString;
 	}

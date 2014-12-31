@@ -71,7 +71,6 @@ public class Levels
 						{
 							fIndex = roomIDX;
 							currentRoomIndex = Integer.parseInt(rm.getRoomNum());
-							//rm.setComplete(true);
 							hasBoth = true;
 						}
 					}
@@ -122,11 +121,6 @@ public class Levels
 		}
 	}
 
-/*	public String [] getArray(int max)
-	{
-		String [] thisArray = new String [max];
-		return thisArray;
-	}*/
 
 	public void loadLevelXML(String filename, int areaID) throws XMLStreamException
 	{
@@ -153,6 +147,8 @@ public class Levels
 		int dMod = 0;
 		int hit = 0;
 		String idesc = null;
+		boolean rAction = false;
+		String rType = null;
 
 
 		while (r.reader.hasNext())
@@ -205,6 +201,15 @@ public class Levels
 							aCount = 0;
 						}
 
+						if (tagStart.equals("descOnComplete"))
+						{
+							rAction = Boolean.parseBoolean(r.getAttrValue());
+						}
+						if (tagStart.equals("action"))
+						{
+							rType = r.getAttrValue();
+						}
+
 					}
 					break;
 				case 1: //characters
@@ -228,6 +233,9 @@ public class Levels
 							case "descOnComplete":
 								troom.setDescComplete(tag);
 								break;
+							case "action":
+								troom.setActionAll(rAction, rType, tag);
+								break;
 							case "word":
 								troom.addListKeyword(tag);
 								break;
@@ -243,6 +251,9 @@ public class Levels
 								break;
 							case "hunger":
 								iHunger = Integer.parseInt(tag);
+								break;
+							case "health":
+								iHealth = Integer.parseInt(tag);
 								break;
 							case "desc":
 								idesc = tag;
@@ -278,6 +289,13 @@ public class Levels
 									subclass = "";
 								}
 								break;
+							case "item":
+								if (subclass.equalsIgnoreCase("potion"))
+								{
+									Potion ptemp = new Potion(iName, idesc, false, iHealth, iHunger);
+									Player.addInvItem(iName, iQty, equip, true, troom.getRoomNum(), ptemp);
+								}
+								break;
 
 
 						}
@@ -289,14 +307,10 @@ public class Levels
 		{
 			room.addAll(rList);
 		}
-		/*if ((listKeyword != null) && (!listKeyword.isEmpty()));
-		{
-			listKeyword.addAll(words);
-		}*/
 	}
 
 
-
+/* deprecated
 	public void loadLevel()
 	{
 		try
@@ -327,7 +341,7 @@ public class Levels
 			ioe.printStackTrace();
 		}
 	}
-
+	*/
 
 }
 

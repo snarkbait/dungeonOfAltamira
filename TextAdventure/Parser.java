@@ -120,7 +120,7 @@ used only for console version of application
 		else
 		{
 			int mc = this.checkMenuCommands(this.getWord(0));
-			if (mc != -1)
+			if (mc != -1 && mc < 4)
 			{
 				response = this.getWord(0);
 			}

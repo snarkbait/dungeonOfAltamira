@@ -7,8 +7,9 @@ public class Potion extends InvItem
 	private int damageBonus;
 	private int hitBonus;
 
-	public Potion(int health, int hunger)
+	public Potion(String name, String desc, boolean equip, int health, int hunger)
 	{
+		super( name, desc, equip);
 		healthBonus = health;
 		hungerBonus = hunger;
 	}

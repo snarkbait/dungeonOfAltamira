@@ -104,7 +104,7 @@ public class GameGUI extends JFrame
 						break;
 					case 4:
 					case 5: // take item
-						response = par.getResponse(wordIndex); // TODO: fix this, not getting full response
+						response = par.getResponse(wordIndex);
 						console.append(response + newline);
 
 						// loop through parsed input words, starting after first word
@@ -127,6 +127,10 @@ public class GameGUI extends JFrame
 									console.append("You cannot do that here." + newline);
 								}
 							}
+							else
+							{
+								console.append("You cannot take that item." + newline);
+							}
 						}
 						break;
 					default:
@@ -141,7 +145,7 @@ public class GameGUI extends JFrame
 							int roomIndex = level.processAction(par, p);
 							if (roomIndex != -1)
 							{
-								console.append(level.getRoomDesc(roomIndex));
+								console.append(level.getRoomDesc(roomIndex) + newline);
 								// set area 'complete' --- note TODO: some areas need completion from other events. fix.
 								level.setRoomComplete(roomIndex);
 							}

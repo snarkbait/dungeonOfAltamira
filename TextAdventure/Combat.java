@@ -18,7 +18,7 @@ public class Combat
 	public static int[][] combatMatrix;
 	private Monster m;
 	private static ArrayList<Monster> mList;
-	//private Weapon.AttackType[] atk = null;
+	private Parser par = new Parser();
 
 	public Combat()
 	{
@@ -65,10 +65,12 @@ public class Combat
 		return randInt + pModifier;
 	}
 
-	public static ArrayList<Monster> readMonsterFile(String filename) throws XMLStreamException
+	public static ArrayList<Monster> readMonsterFile(String filename, int monsterID) throws XMLStreamException
 	{
 		Monster m = null;
 		ArrayList<Monster> mList = null;
+		int ID = 0;
+		boolean monsterFound = false;
 		String tagContent = null;
 		String tagStart = null;
 		String tagEnd = null;
@@ -85,68 +87,86 @@ public class Combat
 			{
 				case 0: //start
 					tagStart = r.getTag();
-					if (tagStart.equals("monster"))
-					{
-						m = new Monster();
-						m.id = Integer.parseInt(r.getAttrValue());
-					}
 					if (tagStart.equals("root"))
 					{
+						System.out.println("root");
 						mList = new ArrayList<Monster>();
 					}
 
-					if (tagStart.equals("attacks"))
+					if (tagStart.equals("monster"))
 					{
-						m.setNumAttacks(Integer.parseInt(r.getAttrValue()));
-						m.initArrays();
-						count = 0;
+						ID = Integer.parseInt(r.getAttrValue());
+						if (ID == monsterID)
+						{
+							System.out.println("monster id:" + ID);
+							m = new Monster();
+							m.id = ID;
+						}
+					}
+
+					if (ID == monsterID)
+					{
+
+						if (tagStart.equals("attacks"))
+						{
+							m.setNumAttacks(Integer.parseInt(r.getAttrValue()));
+							m.initArrays();
+							count = 0;
+						}
 					}
 					break;
 				case 1:
-					tagContent = r.getText();
+					if (ID == monsterID)
+					{
+						tagContent = r.getText();
+					}
 					break;
 				case 2:
-					tagEnd = r.getTag();
-					switch (tagEnd)
+
+					if (ID == monsterID)
 					{
-						case "monster":
-							mList.add(m);
-							break;
-						case "name":
-							m.setName(tagContent);
-							break;
-						case "desc":
-							m.setDesc(tagContent);
-							break;
-						case "hpMin":
-							m.setHPMin(Integer.parseInt(tagContent));
-							break;
-						case "hpMax":
-							m.setHPMax(Integer.parseInt(tagContent));
-							break;
-						case "armorClass":
-							m.setAC(Integer.parseInt(tagContent));
-							break;
-						case "tohit":
-							m.setToHit(Integer.parseInt(tagContent));
-							break;
-						case "isDead":
-							m.setIsDead(Boolean.parseBoolean(tagContent));
-							break;
-						case "attackType":
-							atk = Weapon.AttackType.valueOf(tagContent);
-							break;
-						case "attackDesc":
-							adesc = tagContent;
-							break;
-						case "attackDamage":
-							adamage = Integer.parseInt(tagContent);
-							break;
-						case "attackDmgModifier":
-							amod = Integer.parseInt(tagContent);
-							m.addAttack( count, atk, adesc, adamage, amod);
-							count++;
-							break;
+						tagEnd = r.getTag();
+						switch (tagEnd)
+						{
+							case "monster":
+								mList.add(m);
+								break;
+							case "name":
+								m.setName(tagContent);
+								break;
+							case "desc":
+								m.setDesc(tagContent);
+								break;
+							case "hpMin":
+								m.setHPMin(Integer.parseInt(tagContent));
+								break;
+							case "hpMax":
+								m.setHPMax(Integer.parseInt(tagContent));
+								break;
+							case "armorClass":
+								m.setAC(Integer.parseInt(tagContent));
+								break;
+							case "tohit":
+								m.setToHit(Integer.parseInt(tagContent));
+								break;
+							case "isDead":
+								m.setIsDead(Boolean.parseBoolean(tagContent));
+								break;
+							case "attackType":
+								atk = Weapon.AttackType.valueOf(tagContent);
+								break;
+							case "attackDesc":
+								adesc = tagContent;
+								break;
+							case "attackDamage":
+								adamage = Integer.parseInt(tagContent);
+								break;
+							case "attackDmgModifier":
+								amod = Integer.parseInt(tagContent);
+								m.addAttack( count, atk, adesc, adamage, amod);
+								count++;
+								break;
+						}
 					}
 					break;
 
@@ -155,6 +175,29 @@ public class Combat
 		}
 		return mList;
 	}
+
+	public void combatInit()
+	{
+		// TODO
+	}
+
+	public int combatPlayerTurn(Player p)
+	{
+		int mAttack = -1;
+
+		while (!m.isDead)
+		{
+			// TODO
+		}
+		return 0;
+	}
+
+	public int combatMonsterTurn(Player p)
+	{
+		// TODO
+		return 0;
+	}
+
 
 	public static void main(String args []) ///temp for testing
 	{
@@ -169,7 +212,7 @@ public class Combat
 		Combat c = new Combat();
 		try
 		{
-			mList = readMonsterFile("monster");
+			mList = readMonsterFile("monster", 101);
 		}
 		catch (XMLStreamException e)
 		{
@@ -195,7 +238,7 @@ public class Combat
 	while (!inline.equalsIgnoreCase("quit"))
 	{
 
-		m = mList.get(Player.getRandomInt(0, mList.size()-1));
+		m = mList.get(0);//Player.getRandomInt(0, mList.size()-1));
 		m.setIsDead(false);
 		m.calcHP();
 		pHP = 100;

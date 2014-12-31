@@ -213,7 +213,7 @@
       </keywords>
       <description>The walls are unclimbable.</description>
     </room>
-    <room id="exit">
+    <room id="1011">
       <exit num ="1"></exit>
       <keywords num="7">
         <word type="action">exit</word>
@@ -224,7 +224,9 @@
         <word type="thing">door</word>
         <word type="thing">north</word>
       </keywords>
-      <description>You exit the room out the gate.</description>
+      <description>You cannot exit this way.</description>
+      <descOnComplete action="true">you exit out the open gate.</descOnComplete>
+      <action type="roomID">1008</action>
     </room>
   </area>
   <area id="2">
@@ -256,10 +258,10 @@
       <items qty="1">
         <item subclass="potion">
           <name>
-            health potion
+            potion
           </name>
           <qty>
-            1
+            2
           </qty>
           <equip>
             false
@@ -285,10 +287,10 @@
         <word type="THING">north</word>
       </keywords>
       <description>
-        As you move downb the hallway, you hear rustling and footsteps approaching...\n
+        As you move down the hallway, you hear rustling and footsteps approaching...
       </description>
       <descOnComplete action="true">
-        More junk on the floor, and a dead goblin.\n
+        More junk on the floor, and a dead goblin.
       </descOnComplete>
       <action type="MONSTER">
         <ID>103</ID>

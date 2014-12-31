@@ -14,6 +14,9 @@ public class Room
 	private String description;
 	private String descOnComplete;
 	private boolean complete;
+	private boolean action;
+	private String actionType;
+	private String actionLabel;
 	private ArrayList<String> listKeyword;
 
 	public Room()
@@ -23,16 +26,22 @@ public class Room
 		description = "";
 		descOnComplete = "";
 		complete = false;
+		action = false;
+		actionType = "";
+		actionLabel = "";
 		listKeyword = new ArrayList<String>();
 	}
 
-	public Room(String cRoomNum,String cKeywords,String cDescription,boolean cComplete, String dComplete)
+	public Room(String cRoomNum,String cKeywords,String cDescription,boolean cComplete, boolean cAction, String cType, String dComplete, String label)
 	{
 		roomNum = cRoomNum;
 		keywords = cKeywords;
 		description = cDescription;
 		complete = cComplete;
+		action = cAction;
+		actionType = cType;
 		descOnComplete = dComplete;
+		actionLabel = label;
 		listKeyword = new ArrayList<String>();
 	}
 
@@ -92,6 +101,28 @@ public class Room
 		return descOnComplete;
 	}
 
+	public void setActionAll(boolean a, String type, String label)
+	{
+		action = a;
+		actionType = type;
+		actionLabel = label;
+	}
+
+	public boolean getAction()
+	{
+		return action;
+	}
+
+	public String getActionType()
+	{
+		return actionType;
+	}
+
+	public String getActionLabel()
+	{
+		return actionLabel;
+	}
+
 	public boolean isComplete()
 	{
 		return complete;
@@ -106,7 +137,29 @@ public class Room
 	{
 		return this.indexOf(rmNum);
 	}*/
-
+	public int processAction()  // if 'room' has an action that needs to be performed before 2nd description is displayed
+	{
+		int retval = -1;
+		if (action)
+		{
+			switch (actionType)
+			{
+				case "ITEM":
+					retval = 0;
+					break;
+				case "HP":
+					retval = 1;
+					break;
+				case "MONSTER":
+					retval = 2;
+					break;
+				case "roomID":
+					retval = 3;
+					break;
+			}
+		}
+		return retval;
+	}
 
 	public void tokenKeys(String rKeys)
 	{
