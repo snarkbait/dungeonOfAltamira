@@ -8,6 +8,7 @@
     <armorClass>4</armorClass>
     <toHit>4</toHit>
     <isDead>false</isDead>
+    <expToPlayer>1000</expToPlayer>
     <attacks numAttacks ="3">
       <attackType>BITE</attackType>
       <attackDesc>The orc attempts to bite you with his nasty, sharp teeth.</attackDesc>
@@ -31,6 +32,7 @@
     <armorClass>0</armorClass>
     <toHit>1</toHit>
     <isDead>false</isDead>
+    <expToPlayer>200</expToPlayer>
     <attacks numAttacks="2">
       <attackType>BITE</attackType>
       <attackDesc>The rat attempts to bite you with his nasty, pointy teeth.</attackDesc>
@@ -50,6 +52,7 @@
     <armorClass>1</armorClass>
     <toHit>1</toHit>
     <isDead>false</isDead>
+    <expToPlayer>250</expToPlayer>
     <attacks numAttacks="3">
       <attackType>BITE</attackType>
       <attackDesc>The goblin tries to bite you.</attackDesc>
@@ -73,6 +76,7 @@
     <armorClass>0</armorClass>
     <toHit>2</toHit>
     <isDead>false</isDead>
+    <expToPlayer>250</expToPlayer>
     <attacks numAttacks="2">
       <attackType>BITE</attackType>
       <attackDesc>The snake tries to bite you</attackDesc>
@@ -92,6 +96,7 @@
     <armorClass>4</armorClass>
     <toHit>3</toHit>
     <isDead>false</isDead>
+    <expToPlayer>1500</expToPlayer>
     <attacks numAttacks="2">
       <attackType>PUNCH</attackType>
       <attackDesc>The troll takes a swing at your with his mighty arm.</attackDesc>

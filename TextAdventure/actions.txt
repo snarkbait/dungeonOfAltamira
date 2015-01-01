@@ -8,6 +8,8 @@ kill
 eat
 drink
 use
+equip
+read
 go
 north
 south

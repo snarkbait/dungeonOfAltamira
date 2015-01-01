@@ -133,6 +133,38 @@ public class GameGUI extends JFrame
 							}
 						}
 						break;
+					case 6:
+					case 7: // use, equip
+						response = par.getResponse(wordIndex);
+						console.append(response + newline);
+
+						// loop through parsed input words, starting after first word
+						for (int i = 1; i < par.getListSize(); i++)
+						{
+							int getitem = p.findItem(par.getWord(i));
+							System.out.println("item:" + getitem);
+							if (getitem >=0)
+							{
+								Inventory item = p.getInvItem(getitem);
+								if (item.itemDetail.getIsEquip())
+								{
+									if (!item.getEquip())
+									{
+										item.setEquip(true);
+										console.append("Your " + item.getItem() + " is equipped" + newline);
+									}
+									else
+									{
+										console.append("Item is already equipped." + newline);
+									}
+								}
+								else
+								{
+									console.append("That item cannot be equipped." + newline);
+								}
+							}
+						}
+						break;
 					default:
 
 						// not a menu command, return response like "you _____ the ______"

@@ -292,12 +292,7 @@
       <descOnComplete action="true" after="false">
         More junk on the floor, and a dead goblin.
       </descOnComplete>
-      <action type="MONSTER">
-        <ID>103</ID>
-        <onDeath exp="250">
-          The goblin is dead.
-        </onDeath>
-      </action>
+      <action type="MONSTER">103</action>
     </room>
     <room id="2004">
       <keywords num="5">
@@ -310,7 +305,8 @@
       <description>
         You loot the goblin corpse, there is some leather armor that looks like it will fit you, and 5 gold pieces.\n
       </description>
-      <descOnComplete action="false" after="false">Just a dead, now naked goblin. Don't get any ideas.</descOnComplete>
+      <descOnComplete action="true" after="false">Just a dead, now naked goblin. Don't get any ideas.</descOnComplete>
+      <action type="ITEM"></action>
       <items qty="2">
         <item subclass="armor">
           <name>Leather Armor</name>

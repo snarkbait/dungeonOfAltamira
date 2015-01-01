@@ -15,13 +15,15 @@ public class Parser
 	private final String [] articleList = {"the","a","at","up","down","over","around","with","in","to","from","all"};
 
 	// menu words that can be used anywhere
-	private final String [] menuCommands = {"quit","stats","inventory","inv","take","grab"};
+	private final String [] menuCommands = {"quit","stats","inventory","inv","take","grab","use","equip"};
 	/*				QUIT = 0
 					STATS = 1
 					INVENTORY = 2
 					INV = 3
 					TAKE = 4
 					GRAB = 5
+					USE = 6
+					EQUIP = 7
 	*/
 
 	// default constructor

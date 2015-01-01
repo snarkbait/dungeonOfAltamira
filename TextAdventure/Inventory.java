@@ -5,7 +5,7 @@ public class Inventory
 
 	private String item;
 	private int qty;
-	private boolean isEquipped;
+	private boolean isEquipped; // is equipped
 	private boolean gettable;
 	private String roomID;
 	public InvItem itemDetail;

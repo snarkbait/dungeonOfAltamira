@@ -12,6 +12,7 @@ public class Monster
 	private int hpMin;
 	private int hpMax;
 	private int numAttacks;
+	private int expToPlayer;
 
 /*
  Using multiple arrays with the same index instead of another class, true OOP nerds would probably have a heart attack, but it was just quicker.
@@ -34,9 +35,10 @@ public class Monster
 		hpMin = 0;
 		hpMax = 0;
 		numAttacks = 0;
+		expToPlayer = 0;
 	}
 
-	public Monster(String n, String d, int min, int max, int ac, int tohit, int num)
+	public Monster(String n, String d, int min, int max, int ac, int tohit, int num, int exp)
 	{
 		name = n;
 		desc = d;
@@ -46,6 +48,7 @@ public class Monster
 		toHit = tohit;
 		isDead = false;
 		numAttacks = num;
+		expToPlayer = exp;
 
 		if (numAttacks > 0)
 		{
@@ -170,6 +173,17 @@ public class Monster
 	{
 		return isDead;
 	}
+
+	public void setExp(int exp)
+	{
+		expToPlayer = exp;
+	}
+
+	public int getExp()
+	{
+		return expToPlayer;
+	}
+
 
 	public void addAttack(int index, Weapon.AttackType type, String desc, int dmg, int dmgMod)
 	{

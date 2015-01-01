@@ -219,67 +219,6 @@ public class Levels
 
 
 
-/*
-	public String getRoomDesc(Player p, int index) // also does some action handling
-	{
-		String desc = "";
-		Room rm = new Room();
-		if (index < room.size())
-		{
-			rm = room.get(index);
-			if (!rm.isComplete())
-			{
-				desc = rm.getDesc();
-				int t = this.roomProcessAction(p, index);
-				if (t == 0) // item
-				{
-					int itemCount = p.findGettableByRoomID(rm.getRoomNum());
-					System.out.println("room:" + itemCount);
-					if (itemCount == 0)
-					{
-						System.out.println("complete?");
-						rm.setComplete(true);
-						desc = rm.getDescComplete();
-
-					}
-				}
-				if (t == 1)
-				{
-					if (rm.action.getIsAfter())
-					{
-						rm.setComplete(true);
-					}
-				}
-				if (t == 3) // room id
-				{
-					String checkRoom = rm.action.getActionLabel();
-					if (this.getRoomComplete(this.findRoomByNum(checkRoom)))
-					{
-						System.out.println("completed!");
-						rm.setComplete(true);
-						desc = rm.getDescComplete();
-					}
-				}
-				else
-				{
-					//rm.setComplete(true);
-				}
-
-			}
-			else
-			{
-				desc = rm.getDescComplete();
-				int t = roomProcessAction(p, index);
-			}
-		}
-		return desc;
-	}
-
-	public int roomProcessAction(Player p, int index)
-	{
-		return room.get(index).processAction(p);
-	}*/
-
 	public void setRoomComplete(int index)
 	{
 		room.get(index).setComplete(true);
@@ -291,20 +230,12 @@ public class Levels
 	}
 
 
-	public void displayDesc() //temporary just for testing
-	{
-		for ( Room currentRoom : room)
-		{
-			System.out.println(currentRoom.getDesc());
-		}
-	}
-
-
 	public void loadLevelXML(String filename, int areaID) throws XMLStreamException
 	{
 		ReadXML r = new ReadXML(filename);
 		ArrayList<Room> rList = null;
 		Weapon.AttackType atk = null;
+		Monster m = null;
 		RoomAction act = null;
 		//ArrayList<String> words = null;
 		Room troom = null;
@@ -325,6 +256,7 @@ public class Levels
 		int aCount = 0;
 		int dMod = 0;
 		int hit = 0;
+		int armorBonus = 0;
 		String idesc = null;
 		boolean rAction = false;
 		String rType = null;
@@ -389,7 +321,8 @@ public class Levels
 						}
 						if (tagStart.equals("action"))
 						{
-							act.setActionType(r.getAttrValue());
+							rType = r.getAttrValue();
+							act.setActionType(rType);
 						}
 
 					}
@@ -438,12 +371,15 @@ public class Levels
 							case "health":
 								iHealth = Integer.parseInt(tag);
 								break;
+							case "ACBonus":
+								armorBonus = Integer.parseInt(tag);
+								break;
 							case "desc":
 								idesc = tag;
 								if (subclass.equalsIgnoreCase("food"))
 								{
-									InvItem temp = new Food(iName, idesc, false, iHunger);
-									Player.addInvItem(iName, iQty, equip, true, troom.getRoomNum(), temp);
+									InvItem temp = new Food(iName, idesc, equip, iHunger);
+									Player.addInvItem(iName, iQty, false, true, troom.getRoomNum(), temp);
 									subclass = "";
 								}
 								else
@@ -465,18 +401,23 @@ public class Levels
 								{
 									//System.out.println("c:" + aCount);
 									//System.out.println("an:" + aNum);
-									Weapon wtemp = new Weapon(iName, idesc, false, iDamage, aNum);
+									Weapon wtemp = new Weapon(iName, idesc, equip, iDamage, aNum);
 									wtemp.addAttack(aCount, atk, dMod, hit);
 									aCount++;
-									Player.addInvItem(iName, iQty, equip, true, troom.getRoomNum(), wtemp);
+									Player.addInvItem(iName, iQty, false, true, troom.getRoomNum(), wtemp);
 									subclass = "";
 								}
 								break;
 							case "item":
 								if (subclass.equalsIgnoreCase("potion"))
 								{
-									Potion ptemp = new Potion(iName, idesc, false, iHealth, iHunger);
-									Player.addInvItem(iName, iQty, equip, true, troom.getRoomNum(), ptemp);
+									Potion ptemp = new Potion(iName, idesc, equip, iHealth, iHunger);
+									Player.addInvItem(iName, iQty, false, true, troom.getRoomNum(), ptemp);
+								}
+								if (subclass.equalsIgnoreCase("armor"))
+								{
+									Armor atemp = new Armor(iName, idesc, equip, armorBonus);
+									Player.addInvItem(iName, iQty, false, true, troom.getRoomNum(), atemp);
 								}
 								break;
 							case "exit":

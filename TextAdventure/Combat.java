@@ -23,6 +23,7 @@ public class Combat
 	public Combat()
 	{
 		combatMatrix = new int[10][10];
+		createCombatMatrix();
 	}
 
 	public static void createCombatMatrix()
@@ -65,7 +66,7 @@ public class Combat
 		return randInt + pModifier;
 	}
 
-	public static ArrayList<Monster> readMonsterFile(String filename, int monsterID) throws XMLStreamException
+/*	public static ArrayList<Monster> readMonsterFile(String filename, int monsterID) throws XMLStreamException
 	{
 		Monster m = null;
 		ArrayList<Monster> mList = null;
@@ -174,12 +175,134 @@ public class Combat
 
 		}
 		return mList;
+	}*/
+
+	public static Monster readMonsterFile(String filename, int monsterID) throws XMLStreamException
+	{
+		Monster m = null;
+		//ArrayList<Monster> mList = null;
+		int ID = 0;
+		boolean monsterFound = false;
+		String tagContent = null;
+		String tagStart = null;
+		String tagEnd = null;
+		String adesc = null;
+		Weapon.AttackType atk = null;
+		int adamage = 0;
+		int amod = 0;
+		int count = 0;
+		ReadXML r = new ReadXML(filename);
+		while (r.reader.hasNext())
+		{
+			int event = r.reader.next();
+			switch (r.getEventType())
+			{
+				case 0: //start
+					tagStart = r.getTag();
+
+					if (tagStart.equals("monster"))
+					{
+						ID = Integer.parseInt(r.getAttrValue());
+						if (ID == monsterID)
+						{
+							System.out.println("monster id:" + ID);
+							m = new Monster();
+							m.id = ID;
+						}
+					}
+
+					if (ID == monsterID)
+					{
+
+						if (tagStart.equals("attacks"))
+						{
+							m.setNumAttacks(Integer.parseInt(r.getAttrValue()));
+							m.initArrays();
+							count = 0;
+						}
+					}
+					break;
+				case 1:
+					if (ID == monsterID)
+					{
+						tagContent = r.getText();
+					}
+					break;
+				case 2:
+
+					if (ID == monsterID)
+					{
+						tagEnd = r.getTag();
+						switch (tagEnd)
+						{
+							case "monster":
+								//mList.add(m);
+								break;
+							case "name":
+								m.setName(tagContent);
+								break;
+							case "desc":
+								m.setDesc(tagContent);
+								break;
+							case "hpMin":
+								m.setHPMin(Integer.parseInt(tagContent));
+								break;
+							case "hpMax":
+								m.setHPMax(Integer.parseInt(tagContent));
+								break;
+							case "armorClass":
+								m.setAC(Integer.parseInt(tagContent));
+								break;
+							case "tohit":
+								m.setToHit(Integer.parseInt(tagContent));
+								break;
+							case "isDead":
+								m.setIsDead(Boolean.parseBoolean(tagContent));
+								break;
+							case "expToPlayer":
+								m.setExp(Integer.parseInt(tagContent));
+								break;
+							case "attackType":
+								atk = Weapon.AttackType.valueOf(tagContent);
+								break;
+							case "attackDesc":
+								adesc = tagContent;
+								break;
+							case "attackDamage":
+								adamage = Integer.parseInt(tagContent);
+								break;
+							case "attackDmgModifier":
+								amod = Integer.parseInt(tagContent);
+								m.addAttack( count, atk, adesc, adamage, amod);
+								count++;
+								break;
+						}
+					}
+					break;
+
+				}
+
+		}
+		return m;
 	}
 
-	public void combatInit()
+
+	public void combatInit(int monsterID, Player p)
 	{
-		// TODO
+		try
+		{
+			Monster m = readMonsterFile("monster",monsterID);
+		}
+		catch (XMLStreamException xse)
+		{
+			System.out.println("Bad error, man");
+		}
+
+		Combat c = new Combat();
 	}
+
+
+
 
 	public int combatPlayerTurn(Player p)
 	{
@@ -206,13 +329,14 @@ public class Combat
 		Weapon w = new Weapon("sword","long sword",true,10,2);
 		w.addAttack(0,Weapon.AttackType.SLASH, 1, 0);
 		w.addAttack(1,Weapon.AttackType.STAB, 1, 5);
+		Monster m = null;
 
 
 
 		Combat c = new Combat();
 		try
 		{
-			mList = readMonsterFile("monster", 101);
+			m = readMonsterFile("monster", 103);
 		}
 		catch (XMLStreamException e)
 		{
@@ -227,7 +351,7 @@ public class Combat
 		//int pAMod = 5;
 		int pAC = 3;
 		int pHP = 100;
-		Monster m;
+		//Monster m;
 		boolean attack;
 		int roll;
 		boolean critical;
@@ -238,7 +362,7 @@ public class Combat
 	while (!inline.equalsIgnoreCase("quit"))
 	{
 
-		m = mList.get(0);//Player.getRandomInt(0, mList.size()-1));
+		//m = mList.get(0);//Player.getRandomInt(0, mList.size()-1));
 		m.setIsDead(false);
 		m.calcHP();
 		pHP = 100;

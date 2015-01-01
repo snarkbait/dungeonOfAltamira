@@ -104,6 +104,8 @@ public class Player
 		return playerInventory.get(index).getGettable();
 	}
 
+
+
 	public void setName(String name)
 	{
 		playerName = name;
@@ -147,6 +149,13 @@ public class Player
 			// to do: death sequence
 		}
 	}
+
+	public int calcHealthPercent() // for status bar
+	{
+		return (hitPoints * 100)/ hpMax;
+	}
+
+
 
 	public void setExpPoints(int exp)
 	{
@@ -254,45 +263,23 @@ public class Player
 		}
 	}
 
-/*	public void checkGettableItems(ArrayList<Room> room)
+	public int findItem(String invItem)
 	{
-		int count = 0;
-		for (Room rm : room)
+		for (Inventory currentItem : playerInventory)
 		{
-			if (rm.getDesc().equals("items"))
+			if (currentItem.getItem().equals(invItem))
 			{
-				rm.tokenKeys(rm.getKeywords());
-				for (int i = 0; i < rm.getListSize(); i++)
-				{
-					if (!rm.isComplete())
-					{
-						count ++;
-						System.out.println("item:" + rm.getTokenWord(i));
-						this.addInvItem(rm.getTokenWord(i), 1, false, true, rm.getRoomNum());
-						//rm.setComplete( true );
-					}
-				}
-				if (count > 0) { rm.setComplete( true ); }
+				return playerInventory.indexOf(currentItem);
 			}
 		}
-	}*/
+		return -1;
+	}
 
-/*	public void listInventory()
+	public Inventory getInvItem(int index)
 	{
-		System.out.println("==========INVENTORY=================");
-		if (playerInventory.size() > 0)
-		{
-			for (String currentItem : playerInventory)
-			{
-				System.out.println(currentItem);
-			}
-		}
-		else
-		{
-			System.out.println("You aren't carrying anything.");
-		}
-		System.out.println("====================================");
-	}*/
+		return playerInventory.get(index);
+	}
+
 
 	public String listInvGUI(boolean gettable)
 	{
@@ -332,12 +319,15 @@ public class Player
 
 	public String toString()
 	{
+		calcToHit();
 		String stats = "==========PLAYER STATS==============\n";
 		stats = stats + playerName + "\n";
 		stats = stats +"====================================\n";
-		stats = stats +"Hit Points: " + hitPoints + "\n" + "Experience Points:" + expPoints + "\n";
+		stats = stats +"Health: " + calcHealthPercent() + "\n";
+		stats = stats +"Hit Points: " + hitPoints + "/" + hpMax + "\n" + "Experience Points:" + expPoints + "\n";
 		stats = stats +"Gold Pieces: " + gold + "\n" + "Level: " + playerLevel + "\n";
 		stats = stats +"Armor Class: " + armorClass + "\n" + "Hunger: " + hunger + "\n";
+		stats = stats +"To Hit: " + toHit + "\n";
 		stats = stats +"====================================\n";
 		return stats;
 	}
