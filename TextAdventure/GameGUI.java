@@ -145,9 +145,20 @@ public class GameGUI extends JFrame
 							int roomIndex = level.processAction(par, p);
 							if (roomIndex != -1)
 							{
-								console.append(level.getRoomDesc(roomIndex) + newline);
-								// set area 'complete' --- note TODO: some areas need completion from other events. fix.
-								level.setRoomComplete(roomIndex);
+								console.append(level.handleSpecialAction(p, roomIndex) + newline);
+								try
+								{
+									if(level.testExitRoom(roomIndex))
+									{
+										console.append(level.getRoomDesc(0));
+									}
+								}
+								catch(XMLStreamException xse){ }
+
+
+
+
+
 							}
 						}
 
@@ -167,7 +178,8 @@ public class GameGUI extends JFrame
 		p.setName(JOptionPane.showInputDialog(null,"Please enter your character's name"));
 
 		// temporary settings for testing
-		p.setHitPoints(Player.getRandomInt(10,15));
+		p.setHpMax(Player.getRandomInt(10,15));
+		p.setHitPoints(p.getHpMax());
 		p.setPlayerLevel(1);
 		p.setHunger(100);
 

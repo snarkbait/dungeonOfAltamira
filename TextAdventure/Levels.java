@@ -86,18 +86,128 @@ public class Levels
 		return room.get(index);
 	}
 
+	public int findRoomByNum(String num)
+	{
+		for (Room rm : room)
+		{
+			if (rm.getRoomNum().equals(num))
+			{
+				return room.indexOf(rm);
+			}
+		}
+		return -1;
+	}
+
+	public boolean testExitRoom(int index) throws XMLStreamException
+	{
+		int e = room.get(index).getExitToLevel();
+		if (e > 0)
+		{
+			if (room.get(index).isComplete())
+			{
+				room.clear();
+				loadLevelXML("level1",e);
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 
 	public String getRoomDesc(int index)
 	{
+		return room.get(index).getDesc();
+	}
+
+	public String handleSpecialAction(Player p, int index) // and get description line
+	{
 		String desc = "";
-		Room rm = new Room();
-		if (index < room.size())
+		String t = null;
+		boolean after = false;
+		Room rm = room.get(index);
+		t = rm.action.getActionType(); // get type of action
+		after = rm.action.getIsAfter(); // does action take place before or after second description
+
+		if (!rm.isComplete())
 		{
-			rm = room.get(index);
+			desc = rm.getDesc(); // get initial description
+		}
+		else
+		{
+			desc = rm.getDescComplete();
+		}
+
+		if (rm.action.getAction()) // if action = true, room has special action
+		{
+
+			switch (t)
+			{
+				case "ITEM": // ITEM - second desc won't show until items are picked up
+					if (!rm.isComplete())
+					{
+						int itemCount = p.findGettableByRoomID(rm.getRoomNum());
+						System.out.println("room:" + itemCount);
+						if (itemCount == 0)
+						{
+							System.out.println("complete?");
+							rm.setComplete(true);
+							desc = rm.getDescComplete();
+						}
+					}
+					break;
+				case "HP": // HP (room adds or subtracts health)
+					if (!after)
+					{
+						if (!rm.isComplete())
+						{
+							System.out.println("hp subtracted");
+							p.addHP(Integer.parseInt(rm.action.getActionLabel()));
+							rm.setComplete(true);
+							desc = rm.getDescComplete();
+						}
+					}
+					else
+					{
+						System.out.println("after");
+						if (!rm.isComplete())
+						{
+							desc = rm.getDesc();
+							rm.setComplete(true);
+						}
+						else
+						{
+							System.out.println("hp hit!");
+							p.addHP(Integer.parseInt(rm.action.getActionLabel()));
+							desc = rm.getDescComplete();
+						}
+					}
+					break;
+				case "MONSTER": // MONSTER - initiate combat, player must defeat befor moving on
+
+					break;
+				case "roomID": // RoomID - requires a different room to be 'complete'
+					if (!rm.isComplete())
+					{
+						String checkRoom = rm.action.getActionLabel();
+						if (this.getRoomComplete(this.findRoomByNum(checkRoom)))
+						{
+							System.out.println("completed!");
+							rm.setComplete(true);
+							desc = rm.getDescComplete();
+						}
+					}
+					break;
+				default: // other
+
+					break;
+			}
+		}
+		else // room has no special action
+		{
 			if (!rm.isComplete())
 			{
-				desc = rm.getDesc();
+				rm.setComplete(true);
 			}
 			else
 			{
@@ -107,9 +217,77 @@ public class Levels
 		return desc;
 	}
 
+
+
+/*
+	public String getRoomDesc(Player p, int index) // also does some action handling
+	{
+		String desc = "";
+		Room rm = new Room();
+		if (index < room.size())
+		{
+			rm = room.get(index);
+			if (!rm.isComplete())
+			{
+				desc = rm.getDesc();
+				int t = this.roomProcessAction(p, index);
+				if (t == 0) // item
+				{
+					int itemCount = p.findGettableByRoomID(rm.getRoomNum());
+					System.out.println("room:" + itemCount);
+					if (itemCount == 0)
+					{
+						System.out.println("complete?");
+						rm.setComplete(true);
+						desc = rm.getDescComplete();
+
+					}
+				}
+				if (t == 1)
+				{
+					if (rm.action.getIsAfter())
+					{
+						rm.setComplete(true);
+					}
+				}
+				if (t == 3) // room id
+				{
+					String checkRoom = rm.action.getActionLabel();
+					if (this.getRoomComplete(this.findRoomByNum(checkRoom)))
+					{
+						System.out.println("completed!");
+						rm.setComplete(true);
+						desc = rm.getDescComplete();
+					}
+				}
+				else
+				{
+					//rm.setComplete(true);
+				}
+
+			}
+			else
+			{
+				desc = rm.getDescComplete();
+				int t = roomProcessAction(p, index);
+			}
+		}
+		return desc;
+	}
+
+	public int roomProcessAction(Player p, int index)
+	{
+		return room.get(index).processAction(p);
+	}*/
+
 	public void setRoomComplete(int index)
 	{
 		room.get(index).setComplete(true);
+	}
+
+	public boolean getRoomComplete(int index)
+	{
+		return room.get(index).isComplete();
 	}
 
 
@@ -127,6 +305,7 @@ public class Levels
 		ReadXML r = new ReadXML(filename);
 		ArrayList<Room> rList = null;
 		Weapon.AttackType atk = null;
+		RoomAction act = null;
 		//ArrayList<String> words = null;
 		Room troom = null;
 		String tag = null;
@@ -204,10 +383,13 @@ public class Levels
 						if (tagStart.equals("descOnComplete"))
 						{
 							rAction = Boolean.parseBoolean(r.getAttrValue());
+							act = new RoomAction();
+							act.setAction(rAction);
+							act.setIsAfter(Boolean.parseBoolean(r.getAttrValue(1)));
 						}
 						if (tagStart.equals("action"))
 						{
-							rType = r.getAttrValue();
+							act.setActionType(r.getAttrValue());
 						}
 
 					}
@@ -234,7 +416,8 @@ public class Levels
 								troom.setDescComplete(tag);
 								break;
 							case "action":
-								troom.setActionAll(rAction, rType, tag);
+								act.setActionLabel(tag);
+								troom.setRoomAction(act);
 								break;
 							case "word":
 								troom.addListKeyword(tag);
@@ -295,6 +478,9 @@ public class Levels
 									Potion ptemp = new Potion(iName, idesc, false, iHealth, iHunger);
 									Player.addInvItem(iName, iQty, equip, true, troom.getRoomNum(), ptemp);
 								}
+								break;
+							case "exit":
+								troom.setExitToLevel(Integer.parseInt(tag));
 								break;
 
 

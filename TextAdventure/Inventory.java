@@ -81,6 +81,7 @@ public class Inventory
 		return gettable;
 	}
 
+
 	public void setRoomID(String roomID)
 	{
 		this.roomID = roomID;

@@ -14,9 +14,8 @@ public class Room
 	private String description;
 	private String descOnComplete;
 	private boolean complete;
-	private boolean action;
-	private String actionType;
-	private String actionLabel;
+	private int exitToLevel;
+	RoomAction action;
 	private ArrayList<String> listKeyword;
 
 	public Room()
@@ -26,22 +25,20 @@ public class Room
 		description = "";
 		descOnComplete = "";
 		complete = false;
-		action = false;
-		actionType = "";
-		actionLabel = "";
+		exitToLevel = -1;
+		action = new RoomAction();
 		listKeyword = new ArrayList<String>();
 	}
 
-	public Room(String cRoomNum,String cKeywords,String cDescription,boolean cComplete, boolean cAction, String cType, String dComplete, String label)
+	public Room(String cRoomNum,String cKeywords,String cDescription,boolean cComplete, String dComplete, int exit, RoomAction act)
 	{
 		roomNum = cRoomNum;
 		keywords = cKeywords;
 		description = cDescription;
 		complete = cComplete;
-		action = cAction;
-		actionType = cType;
 		descOnComplete = dComplete;
-		actionLabel = label;
+		action = act;
+		exitToLevel = exit;
 		listKeyword = new ArrayList<String>();
 	}
 
@@ -101,27 +98,22 @@ public class Room
 		return descOnComplete;
 	}
 
-	public void setActionAll(boolean a, String type, String label)
+	public void setExitToLevel(int exit)
 	{
-		action = a;
-		actionType = type;
-		actionLabel = label;
+		exitToLevel = exit;
 	}
 
-	public boolean getAction()
+	public int getExitToLevel()
 	{
-		return action;
+		return exitToLevel;
 	}
 
-	public String getActionType()
+	public void setRoomAction(RoomAction act)
 	{
-		return actionType;
+		action = act;
 	}
 
-	public String getActionLabel()
-	{
-		return actionLabel;
-	}
+
 
 	public boolean isComplete()
 	{
@@ -133,33 +125,6 @@ public class Room
 		this.complete = complete;
 	}
 
-/*	public int getRoomIndex(String rmNum)
-	{
-		return this.indexOf(rmNum);
-	}*/
-	public int processAction()  // if 'room' has an action that needs to be performed before 2nd description is displayed
-	{
-		int retval = -1;
-		if (action)
-		{
-			switch (actionType)
-			{
-				case "ITEM":
-					retval = 0;
-					break;
-				case "HP":
-					retval = 1;
-					break;
-				case "MONSTER":
-					retval = 2;
-					break;
-				case "roomID":
-					retval = 3;
-					break;
-			}
-		}
-		return retval;
-	}
 
 	public void tokenKeys(String rKeys)
 	{

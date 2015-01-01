@@ -76,11 +76,33 @@ public class Player
 		return playerInventory.get(index).getRoomID();
 	}
 
+
+	public int findGettableByRoomID(String roomID) // only 'gettable' so picked up
+	{
+		int count = 0;
+		for (Inventory curr : playerInventory)
+		{
+			if (curr.getRoomID().equals(roomID))
+			{
+				if (curr.getGettable())
+				{
+					count++;
+				}
+				//return playerInventory.indexOf(curr);
+			}
+		}
+		return count;
+	}
+
 	public void setInvGettable(int index)
 	{
 		playerInventory.get(index).setGettable(false);
 	}
 
+	public boolean getInvGettable(int index)
+	{
+		return playerInventory.get(index).getGettable();
+	}
 
 	public void setName(String name)
 	{
@@ -115,7 +137,7 @@ public class Player
 
 	public void addHP(int amt)
 	{
-		hitPoints = hitPoints + amt;
+		hitPoints += amt;
 		if (hitPoints > hpMax)
 		{
 			hitPoints = hpMax;

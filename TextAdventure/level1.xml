@@ -35,7 +35,7 @@
       <description>
         After some searching, you find a loaf of stale bread, and a small dagger in a scabbard.
       </description>
-      <descOnComplete action="true">
+      <descOnComplete action="true" after="false">
         There is nothing here but random trash.
       </descOnComplete>
       <action type="ITEM"></action>
@@ -192,7 +192,7 @@
       <description>
         The iron bars of the gate are rusty and old, and they do not budge.
       </description>
-      <descOnComplete action="true">The gate is already open.</descOnComplete>
+      <descOnComplete action="true" after="false">The gate is already open.</descOnComplete>
       <action type="roomID">1006</action>
     </room>
     <room id="1009">
@@ -201,7 +201,7 @@
         <word type="thing">table</word>
       </keywords>
       <description>You jump up on the table. Woohoo!</description>
-      <descOnComplete action="true">
+      <descOnComplete action="true" after="true">
         You fall off, injuring yourself. (Hit Point -3). Dumbass.
       </descOnComplete>
       <action type="HP">-3</action>
@@ -214,7 +214,7 @@
       <description>The walls are unclimbable.</description>
     </room>
     <room id="1011">
-      <exit num ="1"></exit>
+      <exit>2</exit>
       <keywords num="7">
         <word type="action">exit</word>
         <word type="action">go</word>
@@ -225,8 +225,8 @@
         <word type="thing">north</word>
       </keywords>
       <description>You cannot exit this way.</description>
-      <descOnComplete action="true">you exit out the open gate.</descOnComplete>
-      <action type="roomID">1008</action>
+      <descOnComplete action="true" after="false">You exit out the open gate.</descOnComplete>
+      <action type="roomID">1006</action>
     </room>
   </area>
   <area id="2">
@@ -251,7 +251,7 @@
       <description>
         Among the piles of broken furniture, you find a small vial with a purple liquid in it.
       </description>
-      <descOnComplete action="true">
+      <descOnComplete action="true" after="false">
         Just a bunch of broken furniture.
       </descOnComplete>
       <action type="ITEM"></action>
@@ -289,7 +289,7 @@
       <description>
         As you move down the hallway, you hear rustling and footsteps approaching...
       </description>
-      <descOnComplete action="true">
+      <descOnComplete action="true" after="false">
         More junk on the floor, and a dead goblin.
       </descOnComplete>
       <action type="MONSTER">
@@ -310,7 +310,7 @@
       <description>
         You loot the goblin corpse, there is some leather armor that looks like it will fit you, and 5 gold pieces.\n
       </description>
-      <descOnComplete action="false">Just a dead, now naked goblin. Don't get any ideas.</descOnComplete>
+      <descOnComplete action="false" after="false">Just a dead, now naked goblin. Don't get any ideas.</descOnComplete>
       <items qty="2">
         <item subclass="armor">
           <name>Leather Armor</name>

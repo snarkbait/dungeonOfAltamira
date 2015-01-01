@@ -49,6 +49,11 @@ public class ReadXML
 		return reader.getAttributeValue(0);
 	}
 
+	public String getAttrValue(int index)
+	{
+		return reader.getAttributeValue(index);
+	}
+
 	public String getText()
 	{
 		return reader.getText().trim();
