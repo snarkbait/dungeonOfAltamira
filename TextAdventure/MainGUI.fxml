@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainGUIController">
+   <children>
+      <SplitPane dividerPositions="0.23115577889447236" layoutX="162.0" layoutY="50.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0">
+               <children>
+                  <ImageView fitHeight="59.0" fitWidth="486.0" layoutX="26.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../NetBeansProjects/dungeon.png" />
+                     </image>
+                  </ImageView>
+                  <HBox layoutX="645.0" layoutY="96.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="saveButton" layoutX="645.0" layoutY="96.0" mnemonicParsing="false" text="Save" />
+                        <Button fx:id="quitButton" layoutX="708.0" layoutY="96.0" mnemonicParsing="false" text="Quit" />
+                     </children>
+                  </HBox>
+                  <Label fx:id="playerName" layoutX="117.0" layoutY="81.0" text="Character Name">
+                     <font>
+                        <Font name="Medieval Scribish" size="27.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <HBox layoutX="57.0" layoutY="28.0" spacing="10.0" AnchorPane.leftAnchor="57.0" AnchorPane.rightAnchor="136.0">
+                     <children>
+                        <Label layoutX="57.0" layoutY="31.0" minWidth="-Infinity" text="Enter text here:">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="inputBox" layoutX="150.0" layoutY="28.0" prefHeight="25.0" prefWidth="280.0" promptText="&gt;" />
+                     </children>
+                  </HBox>
+                  <TextArea fx:id="console" editable="false" layoutX="57.0" layoutY="61.0" prefHeight="200.0" prefWidth="497.0" wrapText="true">
+                     <font>
+                        <Font name="Cambria" size="13.0" />
+                     </font>
+                  </TextArea>
+                  <ImageView fx:id="imageViewer" fitHeight="296.0" fitWidth="200.0" layoutX="570.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../NetBeansProjects/kobold-leader.png" />
+                     </image>
+                  </ImageView>
+                  <ProgressBar fx:id="healthBar" layoutX="96.0" layoutY="295.0" prefHeight="18.0" prefWidth="124.0" progress="1.0" />
+                  <Label layoutX="96.0" layoutY="270.0" text="HEALTH">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <ProgressBar fx:id="hungerBar" layoutX="306.0" layoutY="295.0" prefHeight="18.0" prefWidth="124.0" progress="1.0" />
+                  <Label layoutX="306.0" layoutY="271.0" text="HUNGER">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="43.0" layoutY="330.0" text="HIT POINTS" />
+                  <Label layoutX="43.0" layoutY="359.0" text="EXPERIENCE" />
+                  <Label layoutX="43.0" layoutY="389.0" text="ARMOR CLASS" />
+                  <Label layoutX="236.0" layoutY="330.0" text="LEVEL" />
+                  <Label layoutX="238.0" layoutY="359.0" text="TO HIT" />
+                  <Label layoutX="238.0" layoutY="389.0" text="GOLD" />
+                  <Label fx:id="labelHP" layoutX="133.0" layoutY="330.0" text="14/18" textFill="RED">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="labelExp" layoutX="133.0" layoutY="359.0" text="250" textFill="RED">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="labelAC" layoutX="133.0" layoutY="389.0" text="0" textFill="RED">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="labelLevel" layoutX="292.0" layoutY="330.0" text="1" textFill="RED">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="labelToHit" layoutX="292.0" layoutY="359.0" text="0" textFill="RED">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="labelGold" layoutX="292.0" layoutY="389.0" text="25" textFill="RED">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font></Label>
+                  <ListView fx:id="invListView" layoutX="368.0" layoutY="341.0" prefHeight="97.0" prefWidth="167.0" />
+                  <Label layoutX="385.0" layoutY="322.0" text="INVENTORY" />
+                  <Button fx:id="equipButton" layoutX="544.0" layoutY="355.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="46.0" text="Equip" />
+                  <Button fx:id="dropButton" layoutX="544.0" layoutY="385.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="46.0" text="Drop" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

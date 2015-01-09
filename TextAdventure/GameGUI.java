@@ -23,6 +23,8 @@ public class GameGUI extends JFrame
 	private	Actions aw = new Actions();
 	private static Player p = new Player();
 	private static Levels level = new Levels();
+	private static Parser par = new Parser();
+	private boolean melee = false;
 //	aw.loadActions();
 
 	private String inputLine;
@@ -60,6 +62,11 @@ public class GameGUI extends JFrame
 		aw.loadActions();
 	}
 
+	public Parser sendToCombat(Parser par)
+	{
+		return par;
+	}
+
 	public void appendConsole(String iString)
 	{
 		console.append(iString + newline);
@@ -80,8 +87,8 @@ public class GameGUI extends JFrame
 			// clear text box
 			inputArea.setText("");
 
-			// create parser
-			Parser par = new Parser(inputLine);
+			// push to parser
+			par.setInputLine(inputLine);
 
 			// tokenize
 			par.tokenize(inputLine);
@@ -167,31 +174,40 @@ public class GameGUI extends JFrame
 						break;
 					default:
 
-						// not a menu command, return response like "you _____ the ______"
-						response = par.getResponse(wordIndex);
-						console.append(response + newline);
-						if (wordIndex != -1)
+						if (!melee)
 						{
 
-							// take the action (go to next 'room')
-							int roomIndex = level.processAction(par, p);
-							if (roomIndex != -1)
+							// not a menu command, return response like "you _____ the ______"
+							response = par.getResponse(wordIndex);
+							console.append(response + newline);
+							if (wordIndex != -1)
 							{
-								console.append(level.handleSpecialAction(p, roomIndex) + newline);
-								try
+
+								// take the action (go to next 'room')
+								int roomIndex = level.processAction(par, p);
+								if (roomIndex != -1)
 								{
-									if(level.testExitRoom(roomIndex))
+									console.append(level.handleSpecialAction(p, roomIndex) + newline);
+									try
 									{
-										console.append(level.getRoomDesc(0));
+										if(level.testExitRoom(roomIndex))
+										{
+											console.append(level.getRoomDesc(0));
+										}
 									}
+									catch(XMLStreamException xse){ }
+
+
+
+
+
 								}
-								catch(XMLStreamException xse){ }
-
-
-
-
-
 							}
+						}
+						else
+						///////// combat ///////
+						{
+							sendToCombat(par);
 						}
 
 				}
@@ -204,6 +220,7 @@ public class GameGUI extends JFrame
 	{
 		String inString = "";
 		level.loadLevelXML("level1", 1);
+
 
 
 

@@ -76,10 +76,10 @@
           <attacks num ="2">
             <attackType>SLASH</attackType>
             <dmgMod>0</dmgMod>
-            <toHitMod>0</toHitMod>
-            <attackType>STAB</attackType>
-            <dmgMod>1</dmgMod>
             <toHitMod>5</toHitMod>
+            <attackType>STAB</attackType>
+            <dmgMod>2</dmgMod>
+            <toHitMod>0</toHitMod>
           </attacks>
          </item>
       </items>

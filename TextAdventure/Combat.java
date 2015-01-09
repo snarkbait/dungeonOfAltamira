@@ -336,7 +336,7 @@ public class Combat
 		Combat c = new Combat();
 		try
 		{
-			m = readMonsterFile("monster", 103);
+			m = readMonsterFile("monster", 101);
 		}
 		catch (XMLStreamException e)
 		{

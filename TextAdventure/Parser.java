@@ -77,7 +77,7 @@ used only for console version of application
 		}
 	}
 
-	public void setInputline(String inLine)
+	public void setInputLine(String inLine)
 	{
 		this.inLine = inLine;
 	}
