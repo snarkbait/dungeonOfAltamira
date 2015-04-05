@@ -2,7 +2,7 @@ import javax.xml.stream.*;
 
 public class ReadXML
 {
-	//private String fileName;
+
 	public  XMLInputFactory factory;
 	public  XMLStreamReader reader;
 

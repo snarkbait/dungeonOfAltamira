@@ -14,7 +14,6 @@ public class Levels
 	private int levelNum;
 	private static int currentRoomIndex;
 	private ArrayList<Room> room;
-//	private ArrayList<Inventory> inv;
 
 	public Levels()
 	{
